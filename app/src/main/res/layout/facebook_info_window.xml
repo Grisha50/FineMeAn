@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/title">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/info"
+            android:layout_alignParentLeft="@+id/eventName"
+            android:layout_alignParentTop="true"
+            android:textSize="25sp"
+            android:text="Facebook Event"
+            />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/social_facebook_box_blue"
+            android:id="@+id/facebookIcon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="@+id/info"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/facebookAddress"
+            android:layout_alignParentBottom="@+id/title"
+            android:textSize="25sp"
+            android:text="Address"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/facebookTime"
+            android:layout_alignParentBottom="@+id/fbAddress"
+            android:textSize="25sp"
+            android:text="Time"
+            android:layout_below="@+id/facebookAddress"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/facebookDate"
+            android:layout_alignParentBottom="@+id/fbDate"
+            android:textSize="25sp"
+            android:text="Date"
+            android:layout_below="@+id/fbAddress"
+            />
+
+
+    </LinearLayout>
+</RelativeLayout>

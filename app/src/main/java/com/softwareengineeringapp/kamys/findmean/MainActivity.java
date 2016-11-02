@@ -47,13 +47,11 @@ public class MainActivity extends Activity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                info.setText(
-                        "User ID: "
-                                + loginResult.getAccessToken().getUserId()
-                                + "\n" +
-                                "Auth Token: "
-                                + loginResult.getAccessToken().getToken()
-                );
+
+
+                        String userID = loginResult.getAccessToken().getUserId() ;
+                        String userToken  = loginResult.getAccessToken().getToken();
+
             }
 
             @Override
@@ -73,7 +71,7 @@ public class MainActivity extends Activity {
 
     public void guestLogin(View view)
     {
-        Intent intent = new Intent(this,MapsActivity.class );
+        Intent intent = new Intent(this,IntermediateMap.class );
         startActivity(intent);
     }
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#DCDCFA">
+
+
+    <TextView
+        android:text="Building"
+        android:layout_width="136dp"
+        android:layout_height="37dp"
+        android:id="@+id/bName"
+        android:textColorLink="?attr/colorButtonNormal"
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:textStyle="normal|bold|italic" />
+
+    <TextView
+        android:text="Bathroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bList"
+        android:textSize="18sp"
+        android:textStyle="normal|italic"
+        android:layout_below="@+id/bName"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

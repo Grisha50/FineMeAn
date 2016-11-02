@@ -7,12 +7,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback  {
 
     private GoogleMap mMap;
+    public static ArrayList<buildingObject> buildings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
+
 
 
     /**
@@ -37,10 +46,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        List<Marker> theMarkers = new ArrayList<>();
+        mMap.setInfoWindowAdapter(new infoWindowAdapter() );
+        int counter = 0 ;
+        while( counter < buildings.size() ){
+            LatLng Adr = new LatLng(buildings.get(counter).Lat ,buildings.get(counter).Long);
+            Marker marker = mMap.addMarker( new MarkerOptions().position(Adr).
+                    title(buildings.get(counter).BuildingName()).snippet(buildings.get(counter).getInfo()).icon(BitmapDescriptorFactory.fromResource(R.layout.building_info_window)));
+         theMarkers.add(marker);
+        }
+
+        
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
     }
 }
