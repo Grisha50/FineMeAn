@@ -32,7 +32,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
          // Intialize facebook sdk
-        AppEventsLogger.activateApp(this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        //AppEventsLogger.activateApp(this);
 
         callbackManager = CallbackManager.Factory.create();
 
