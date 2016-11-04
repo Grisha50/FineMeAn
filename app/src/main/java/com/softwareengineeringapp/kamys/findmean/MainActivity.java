@@ -4,8 +4,10 @@ import android.content.Intent;
 
 import android.app.Activity;
 import android.os.Bundle;
-
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -22,6 +24,12 @@ import java.security.NoSuchAlgorithmException;
 public class MainActivity extends Activity {
     private TextView info;
     private LoginButton loginButton;
+    private Button facebookRequest;
+    private String userID;
+    private String userToken;
+    private TextView output;
+
+
 
     private CallbackManager callbackManager;
 
@@ -38,19 +46,20 @@ public class MainActivity extends Activity {
 
         info = (TextView)findViewById(R.id.info);
         loginButton = (LoginButton)findViewById(R.id.login_button);
-
+        facebookRequest = (Button) findViewById(R.id.GraphRequest1);
+        output = (TextView) findViewById(R.id.textView);
 
         // Gets key hash value off your machine for facebook authentication.
         //DO NOT TOUCH THIS TRY CATCH STATEMENTs
-
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
 
-                        String userID = loginResult.getAccessToken().getUserId() ;
-                        String userToken  = loginResult.getAccessToken().getToken();
+                userID = loginResult.getAccessToken().getUserId() ;
+                userToken  = loginResult.getAccessToken().getToken();
+
 
             }
 
@@ -64,7 +73,24 @@ public class MainActivity extends Activity {
                 info.setText("Login attempt failed.");
             }
         });
+
+        facebookRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                output.setText("Worked");
+                Intent intent = new Intent(MainActivity.this, facebookevents.class);
+                intent.putExtra("userToken", userToken);
+                startActivity(intent);
+            }
+
+        });
+
+
     }
+
+
+
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
