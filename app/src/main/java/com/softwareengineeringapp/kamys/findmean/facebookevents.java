@@ -42,8 +42,9 @@ public class facebookevents extends Activity {
                     }
                 });
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link");
-
+        parameters.putString("fields", "name, place, start_time, end_time");
+        parameters.putString("q", "53703");
+        parameters.putString("type", "event");
         request.setParameters(parameters);
         request.executeAsync();
     }
