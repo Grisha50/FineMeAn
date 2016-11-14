@@ -77,10 +77,8 @@ public class MainActivity extends Activity {
         facebookRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                output.setText("Worked");
-                Intent intent = new Intent(MainActivity.this, facebookevents.class);
-                intent.putExtra("userToken", userToken);
-                startActivity(intent);
+                facebookevents events = new facebookevents();
+                events.eventIDFinder("53703");
             }
 
         });
