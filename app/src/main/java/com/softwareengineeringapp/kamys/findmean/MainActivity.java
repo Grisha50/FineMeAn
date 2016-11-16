@@ -67,6 +67,11 @@ public class MainActivity extends Activity {
                 info.setText("Login attempt failed.");
             }
         });
+
+        //Testing FacebookEventSearch
+        //FacebookEventSearch searcher = new FacebookEventSearch();
+        //searcher.eventFinder(53706, 24, false);
+
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
