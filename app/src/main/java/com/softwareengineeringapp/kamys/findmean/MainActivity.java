@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
          // Intialize facebook sdk
-        AppEventsLogger.activateApp(this);
+        AppEventsLogger.activateApp(getApplication());
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -55,9 +55,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public void onCancel() {
-                info.setText("Login attempt canceled.");
-            }
+            public void onCancel() {info.setText("Login attempt cancelled.");}
 
             @Override
             public void onError(FacebookException e) {
