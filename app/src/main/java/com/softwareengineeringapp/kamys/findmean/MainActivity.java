@@ -32,8 +32,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
          // Intialize facebook sdk
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        //AppEventsLogger.activateApp(this);
+        AppEventsLogger.activateApp(getApplication());
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -48,19 +47,15 @@ public class MainActivity extends Activity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                info.setText(
-                        "User ID: "
-                                + loginResult.getAccessToken().getUserId()
-                                + "\n" +
-                                "Auth Token: "
-                                + loginResult.getAccessToken().getToken()
-                );
+
+
+                        String userID = loginResult.getAccessToken().getUserId() ;
+                        String userToken  = loginResult.getAccessToken().getToken();
+
             }
 
             @Override
-            public void onCancel() {
-                info.setText("Login attempt canceled.");
-            }
+            public void onCancel() {info.setText("Login attempt cancelled.");}
 
             @Override
             public void onError(FacebookException e) {
@@ -79,7 +74,7 @@ public class MainActivity extends Activity {
 
     public void guestLogin(View view)
     {
-        Intent intent = new Intent(this,MapsActivity.class );
+        Intent intent = new Intent(this,IntermediateMap.class );
         startActivity(intent);
     }
 
