@@ -75,6 +75,8 @@ public class FacebookEventSearch {
                             e.printStackTrace();
                         } catch (ParseException e) {
                             e.printStackTrace();
+                        }catch (NullPointerException e){
+
                         }
                     }
                 });
@@ -103,7 +105,8 @@ public class FacebookEventSearch {
                                 temp = iter.next();
                                 String start = temp.getString("start_time");
                                 String end = temp.getString("end_time");
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
+                                SimpleDateFormat dateFormat =
+                                        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
                                 long startTime = dateFormat.parse(start).getTime();
                                 long endTime = dateFormat.parse(end).getTime();
                                 if (startTime - currTime < (3600 * TimeFrame) && endTime - currTime > 0){

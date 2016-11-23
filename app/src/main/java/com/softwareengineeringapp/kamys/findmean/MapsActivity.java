@@ -53,9 +53,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .position(Adr)
                         .title(buildings.get(counter).BuildingName())
-                        .snippet(buildings.get(counter).getInfo())
-                        .icon(BitmapDescriptorFactory.fromResource(R.layout.building_info_window)));
+                        .snippet(buildings.get(counter).getInfo()));
+                        //ERROR:Exception thrown re: image not being a bitmap
+                        //.icon(BitmapDescriptorFactory.fromResource(R.layout.building_info_window)));
                 theMarkers.add(marker);
+                counter++;
             }
         }
     }

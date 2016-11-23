@@ -1,6 +1,12 @@
 package com.softwareengineeringapp.kamys.findmean;
 
+import com.facebook.FacebookSdk;
+
+import org.json.JSONObject;
 import org.junit.Test;
+
+import java.util.List;
+
 import static org.junit.Assert.*;
 /**
  * Created by Jared on 11/15/2016.
@@ -17,5 +23,4 @@ public class MainActivityUnitTest{
         assertNotNull("ERROR: Guest Login button does not exist", R.id.guestLogin);
         assertNotNull("ERROR: Login button does not exist", R.id.login_button);
     }
-
 }
