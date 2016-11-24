@@ -3,11 +3,9 @@ package com.softwareengineeringapp.kamys.findmean;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -52,15 +50,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(buildings != null) {
             while (counter < buildings.size()) {
                 LatLng Adr = new LatLng(buildings.get(counter).Lat, buildings.get(counter).Long);
-                Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).
-                        title(buildings.get(counter).BuildingName()).snippet(buildings.get(counter).getInfo()).icon(BitmapDescriptorFactory.fromResource(R.layout.building_info_window)));
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(Adr)
+                        .title(buildings.get(counter).BuildingName())
+                        .snippet(buildings.get(counter).getInfo()));
+                        //ERROR:Exception thrown re: image not being a bitmap
+                        //.icon(BitmapDescriptorFactory.fromResource(R.layout.building_info_window)));
                 theMarkers.add(marker);
+                counter++;
             }
         }
-
-        
-
-        // Add a marker in Sydney and move the camera
-
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.app.Activity;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,8 +17,14 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONObject;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 
 public class MainActivity extends Activity {
     private TextView info;
@@ -32,7 +39,15 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
          // Intialize facebook sdk
-        AppEventsLogger.activateApp(this);
+        AppEventsLogger.activateApp(getApplication());
+
+        //uncomment when running test:
+
+        try {
+            FacebookEventSearchTest();
+        }catch(Exception e){
+            Log.i("FacebookEventSearch", "ERROR: Exception thrown by FacebookEventSearchTest");
+        }
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -55,15 +70,15 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public void onCancel() {
-                info.setText("Login attempt canceled.");
-            }
+            public void onCancel() {info.setText("Login attempt cancelled.");}
 
             @Override
             public void onError(FacebookException e) {
                 info.setText("Login attempt failed.");
             }
         });
+
+
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -73,6 +88,27 @@ public class MainActivity extends Activity {
     {
         Intent intent = new Intent(this,IntermediateMap.class );
         startActivity(intent);
+    }
+
+
+    public void FacebookEventSearchTest() throws Exception{
+        //Testing FacebookEventSearch
+        FacebookEventSearch searcher = new FacebookEventSearch();
+        List<JSONObject> mEventList = searcher.eventFinder(53706, 24, false);
+
+        assertNotNull("ERROR: Event Search returned null pointer", mEventList);
+        if(mEventList.isEmpty()){
+            return;
+        }
+        for(JSONObject o:mEventList){
+            assertNotNull("ERROR: Null JSONObject in Event List", o);
+            assertFalse("ERROR: Null fields in JSONObjects",
+                    o.get("start_time") == null &&
+                            o.get("end_time") == null &&
+                            o.get("name") == null &&
+                            o.get("description") == null &&
+                            o.get("place") == null);
+        }
     }
 
 
