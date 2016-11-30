@@ -44,12 +44,13 @@ public class FacebookEventSearch {
                     public void onCompleted(GraphResponse response) {
                         JSONObject jobj = response.getJSONObject();
                         System.out.println("object =" + jobj);
-                        //System.out.println("response =" + response);
+                        System.out.println("response =" + response);
                         JSONArray jarray = null;
                         try {
                             jarray = jobj.getJSONArray("data");
                             for (int i = 0; i < jarray.length(); i++) {
                                 JSONObject events = jarray.getJSONObject(i);
+                                System.out.println(events);
                                 EventList.add(events);
                             }
                             Iterator<JSONObject> iter = EventList.iterator();
@@ -67,7 +68,7 @@ public class FacebookEventSearch {
                                     //System.out.println(endTime - currTime);
                                     System.out.println("Unix timestamp: " + startTime);
                                 } else {
-                                    //System.out.println(temp.getString("id") + " was removed");
+                                    System.out.println(temp.getString("id") + " was removed");
                                     iter.remove();
                                 }
                             }
