@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:gravity="bottom"
+        tools:context="com.softwareengineeringapp.kamys.findmean.MapsActivity">
+
+        <Button
+            android:id="@+id/button4"
+
+            android:text="Refresh"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_weight=".5"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/buttonshape"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            />
+
+        <Button
+            android:id="@+id/button2"
+
+            android:text="Filter"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_weight=".5"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/buttonshape"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            />
+
+        <Button
+            android:id="@+id/button3"
+
+            android:text="Settings"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_weight=".5"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/buttonshape"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
