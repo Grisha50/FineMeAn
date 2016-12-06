@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/mainscreen_background3"
+        android:src="@drawable/mainscreen_background3"
         android:id="@+id/imageView"
         android:scaleType="centerCrop" />
 
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/info"
         android:textSize="80sp"
-        android:text="Find\nMe\nA..."
+        android:text="Find\nMe\nAn..."
         android:textStyle="normal|bold|italic"
         android:textColor="#FFFFFF"
         android:fontFamily="serif"
