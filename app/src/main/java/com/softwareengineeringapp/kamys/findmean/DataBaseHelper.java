@@ -49,14 +49,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             //of your application so we are gonna be able to overwrite that database with our database.
             this.getReadableDatabase();
 
-            try {
-
+            try
+            {
                 copyDataBase();
-
-            } catch (IOException e) {
-
+            }
+            catch (IOException e)
+            {
                 throw new Error("Error copying database");
-
             }
         }
 
@@ -119,12 +118,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void openDataBase() throws SQLException {
-
+    public SQLiteDatabase openDataBase() throws SQLException
+    {
         //Open the database
         String myPath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-
+        return myDataBase;
     }
 
     @Override

@@ -3,7 +3,9 @@ package com.softwareengineeringapp.kamys.findmean;
 import android.content.Intent;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +24,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 
@@ -44,29 +47,6 @@ public class MainActivity extends Activity {
          // Intialize facebook sdk
         AppEventsLogger.activateApp(getApplication());
 
-        //uncomment when running test:
-
-        DataBaseHelper myDbHelper;
-        myDbHelper = new DataBaseHelper(this);
-        try {
-
-            myDbHelper.createDataBase();
-
-        } catch (IOException ioe) {
-
-            throw new Error("Unable to create database");
-
-        }
-
-        try {
-
-            myDbHelper.openDataBase();
-
-        }catch(SQLException sqle){
-
-            throw sqle;
-
-        }
 //        try {
 //            FacebookEventSearchTest();
 //       }catch(Exception e){
@@ -119,7 +99,7 @@ public class MainActivity extends Activity {
 
     public void mapView()
     {
-        Intent intent = new Intent(this,MapsActivity.class);
+        Intent intent = new Intent(this,IntermediateMap.class);
         startActivity(intent);
     }
 
