@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,6 +33,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     public static ArrayList<buildingObject> buildings;
+    private Button filter;
+    private Button settings;
+    private Button refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
         //mMap.setInfoWindowAdapter(new infoWindowAdapter() );
-
+/**
         DataBaseHelper myDbHelper;
         myDbHelper = new DataBaseHelper(this);
         try
@@ -132,6 +138,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng Adr = new LatLng(43.070500, -89.398364);
         Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
-        }
+    **/}
     }
 
