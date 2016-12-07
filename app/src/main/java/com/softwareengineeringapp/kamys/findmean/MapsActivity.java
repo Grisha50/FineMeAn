@@ -46,19 +46,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         List<Marker> theMarkers = new ArrayList<>();
         mMap.setInfoWindowAdapter(new infoWindowAdapter() );
-        int counter = 0 ;
-        if(buildings != null) {
-            while (counter < buildings.size()) {
-                LatLng Adr = new LatLng(buildings.get(counter).Lat, buildings.get(counter).Long);
-                Marker marker = mMap.addMarker(new MarkerOptions()
+        LatLng Adr = new LatLng(43.070500, -89.398364);
+        Marker marker = mMap.addMarker(new MarkerOptions()
                         .position(Adr)
-                        .title(buildings.get(counter).BuildingName())
-                        .snippet(buildings.get(counter).getInfo()));
-                        //ERROR:Exception thrown re: image not being a bitmap
-                        //.icon(BitmapDescriptorFactory.fromResource(R.layout.building_info_window)));
+                        .title("Van Hise")
+                        );
                 theMarkers.add(marker);
-                counter++;
-            }
+
         }
     }
-}
+

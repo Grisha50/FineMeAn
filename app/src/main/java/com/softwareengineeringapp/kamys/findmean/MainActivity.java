@@ -16,7 +16,11 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import static junit.framework.Assert.assertFalse;
@@ -34,16 +38,23 @@ public class MainActivity extends Activity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
+       /*DatabaseHelper myDb = new DatabaseHelper(this); //constructs an instance of the database
+        myDb.addBuilding(new buildingObject("Van Hise", 1, 1, 1, 1, 43.075541, -89.406711));
+        myDb.addBuilding(new buildingObject("Sterling", 0, 1, 1, 1, 43.074616, -89.405389));
+        myDb.addBuilding(new buildingObject("Chamberlin", 0, 1, 1, 1, 43.073944, -89.405479));
+        myDb.addBuilding(new buildingObject("Van Vleck", 0, 1, 1, 1, 43.074695, -89.404448));
+        myDb.addBuilding(new buildingObject("Gordon", 0, 1, 1, 1, 43.071656, -89.398192)); //TODO
+        myDb.addBuilding(new buildingObject("SERF", 1, 1, 1, 1, 43.070500, -89.398364));*/
          // Intialize facebook sdk
         AppEventsLogger.activateApp(getApplication());
 
         //uncomment when running test:
 
-        //try {
-        //    FacebookEventSearchTest();
-        //}catch(Exception e){
-        //    Log.i("FacebookEventSearch", "ERROR: Exception thrown by FacebookEventSearchTest");
-        //}
+        try {
+            FacebookEventSearchTest();
+        }catch(Exception e){
+            Log.i("FacebookEventSearch", "ERROR: Exception thrown by FacebookEventSearchTest");
+        }
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -62,7 +73,6 @@ public class MainActivity extends Activity {
 
                         String userID = loginResult.getAccessToken().getUserId() ;
                         String userToken  = loginResult.getAccessToken().getToken();
-
 
             }
 
