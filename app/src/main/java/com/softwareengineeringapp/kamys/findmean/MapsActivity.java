@@ -38,18 +38,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         settings = (Button) findViewById(R.id.button3);
         refresh = (Button) findViewById(R.id.button4);
         filter.setOnClickListener(new View.OnClickListener() {
-           public void onClick (View v) {
-           }
+            public void onClick(View v) {
+            }
         });
         settings.setOnClickListener(new View.OnClickListener() {
-            public void onClick (View v) {
+            public void onClick(View v) {
             }
         });
         refresh.setOnClickListener(new View.OnClickListener() {
-            public void onClick (View v) {
+            public void onClick(View v) {
             }
         });
-
+    }
 
 
 
