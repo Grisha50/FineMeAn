@@ -3,8 +3,8 @@ package com.softwareengineeringapp.kamys.findmean;
 import android.content.Intent;
 
 import android.app.Activity;
+import android.database.SQLException;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.io.IOException;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
@@ -38,18 +39,33 @@ public class MainActivity extends Activity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
-       /*DatabaseHelper myDb = new DatabaseHelper(this); //constructs an instance of the database
-        myDb.addBuilding(new buildingObject("Van Hise", 1, 1, 1, 1, 43.075541, -89.406711));
-        myDb.addBuilding(new buildingObject("Sterling", 0, 1, 1, 1, 43.074616, -89.405389));
-        myDb.addBuilding(new buildingObject("Chamberlin", 0, 1, 1, 1, 43.073944, -89.405479));
-        myDb.addBuilding(new buildingObject("Van Vleck", 0, 1, 1, 1, 43.074695, -89.404448));
-        myDb.addBuilding(new buildingObject("Gordon", 0, 1, 1, 1, 43.071656, -89.398192)); //TODO
-        myDb.addBuilding(new buildingObject("SERF", 1, 1, 1, 1, 43.070500, -89.398364));*/
          // Intialize facebook sdk
         AppEventsLogger.activateApp(getApplication());
 
         //uncomment when running test:
 
+        DataBaseHelper myDbHelper = new DataBaseHelper();
+        myDbHelper = new DataBaseHelper(this);
+
+        try {
+
+            myDbHelper.createDataBase();
+
+        } catch (IOException ioe) {
+
+            throw new Error("Unable to create database");
+
+        }
+
+        try {
+
+            myDbHelper.openDataBase();
+
+        }catch(SQLException sqle){
+
+            throw sqle;
+
+        }
         try {
             FacebookEventSearchTest();
         }catch(Exception e){
