@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -30,8 +31,9 @@ import static junit.framework.Assert.assertNotNull;
 public class MainActivity extends Activity {
     private TextView info;
     private LoginButton loginButton;
-
+    private Button guestButton;
     private CallbackManager callbackManager;
+    public List<JSONObject> mEventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +46,8 @@ public class MainActivity extends Activity {
 
         //uncomment when running test:
 
-        DataBaseHelper myDbHelper = new DataBaseHelper();
+        DataBaseHelper myDbHelper;
         myDbHelper = new DataBaseHelper(this);
-
         try {
 
             myDbHelper.createDataBase();
@@ -66,16 +67,17 @@ public class MainActivity extends Activity {
             throw sqle;
 
         }
-        try {
-            FacebookEventSearchTest();
-        }catch(Exception e){
-            Log.i("FacebookEventSearch", "ERROR: Exception thrown by FacebookEventSearchTest");
-        }
+//        try {
+//            FacebookEventSearchTest();
+//       }catch(Exception e){
+//            Log.i("FacebookEventSearch", "ERROR: Exception thrown by FacebookEventSearchTest");
+//        }
 
         callbackManager = CallbackManager.Factory.create();
 
         info = (TextView)findViewById(R.id.info);
         loginButton = (LoginButton)findViewById(R.id.login_button);
+        guestButton = (Button)findViewById(R.id.guestLogin);
 
 
         // Gets key hash value off your machine for facebook authentication.
@@ -87,9 +89,11 @@ public class MainActivity extends Activity {
             public void onSuccess(LoginResult loginResult) {
 
 
-                        String userID = loginResult.getAccessToken().getUserId() ;
-                        String userToken  = loginResult.getAccessToken().getToken();
-
+                String userID = loginResult.getAccessToken().getUserId() ;
+                String userToken  = loginResult.getAccessToken().getToken();
+                FacebookEventSearch searcher = new FacebookEventSearch();
+                mEventList = searcher.eventFinder(53706,24,false);
+                mapView();
             }
 
             @Override
@@ -101,15 +105,21 @@ public class MainActivity extends Activity {
             }
         });
 
+        guestButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View v) {
+                mapView();
+            }
+        });
+
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void guestLogin(View view)
+    public void mapView()
     {
-        Intent intent = new Intent(this,IntermediateMap.class );
+        Intent intent = new Intent(this,IntermediateMap.class);
         startActivity(intent);
     }
 
