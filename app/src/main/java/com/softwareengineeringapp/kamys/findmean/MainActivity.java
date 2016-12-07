@@ -16,11 +16,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
 import org.json.JSONObject;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import static junit.framework.Assert.assertFalse;
@@ -43,11 +39,11 @@ public class MainActivity extends Activity {
 
         //uncomment when running test:
 
-        try {
-            FacebookEventSearchTest();
-        }catch(Exception e){
-            Log.i("FacebookEventSearch", "ERROR: Exception thrown by FacebookEventSearchTest");
-        }
+        //try {
+        //    FacebookEventSearchTest();
+        //}catch(Exception e){
+        //    Log.i("FacebookEventSearch", "ERROR: Exception thrown by FacebookEventSearchTest");
+        //}
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -66,6 +62,7 @@ public class MainActivity extends Activity {
 
                         String userID = loginResult.getAccessToken().getUserId() ;
                         String userToken  = loginResult.getAccessToken().getToken();
+
 
             }
 
