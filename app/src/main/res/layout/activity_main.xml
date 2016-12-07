@@ -16,19 +16,6 @@
         android:id="@+id/imageView"
         android:scaleType="centerCrop" />
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:elevation="0dp"
-        android:textSize="24sp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/guestLogin"
-        android:paddingBottom="10sp"
-        android:paddingTop="10sp" />
-
     <Button
         android:id="@+id/guestLogin"
 
@@ -75,6 +62,19 @@
         android:layout_above="@+id/guestLogin"
         android:layout_alignEnd="@+id/guestLogin"
         android:layout_marginBottom="30sp" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:elevation="0dp"
+        android:textSize="24sp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="39dp"
+        android:paddingBottom="10sp"
+        android:paddingTop="10sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/guestLogin" />
 
 
 </RelativeLayout>
