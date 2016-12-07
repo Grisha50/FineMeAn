@@ -2,7 +2,9 @@ package com.softwareengineeringapp.kamys.findmean;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,6 +22,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ViewGroup group;
     public static ArrayList<buildingObject> buildings;
+    private Button filter;
+    private Button settings;
+    private Button refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
+        filter = (Button) findViewById(R.id.button2);
+        settings = (Button) findViewById(R.id.button3);
+        refresh = (Button) findViewById(R.id.button4);
+        filter.setOnClickListener(new View.OnClickListener() {
+           public void onClick (View v) {
+           }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View v) {
+            }
+        });
+        refresh.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View v) {
+            }
+        });
 
 
 
