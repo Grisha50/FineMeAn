@@ -1,5 +1,6 @@
 package com.softwareengineeringapp.kamys.findmean;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback  {
 
     private GoogleMap mMap;
+    public static MapsActivity instance = null;
     public static ArrayList<buildingObject> buildings;
     private Button filter;
     private Button settings;
@@ -40,6 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_maps_final);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -49,19 +52,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         settings = (Button) findViewById(R.id.button3);
         refresh = (Button) findViewById(R.id.button4);
         filter.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this,FilterWindow.class));
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this,SettingsWindow.class));
             }
         });
         refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
+
             }
         });
     }
 
+    public void finishActivity() {
+        super.finish();
+        instance = null;
+    }
 
     /**
      * Manipulates the map once available.
