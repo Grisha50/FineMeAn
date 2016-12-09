@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 
     public void mapView()
     {
-        Intent intent = new Intent(this,IntermediateMap.class);
+        Intent intent = new Intent(this,MapsActivity.class);
         startActivity(intent);
     }
 
