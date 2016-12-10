@@ -115,7 +115,7 @@ public class FacebookEventSearch {
                                     //System.out.println(endTime - currTime);
                                     System.out.println("Unix timestamp: " + startTime);
                                 } else {
-                                    //System.out.println(temp.getString("id") + " was removed");
+                                    System.out.println(temp.getString("id") + " was removed");
                                     iter.remove();
                                 }
                             }
@@ -132,9 +132,10 @@ public class FacebookEventSearch {
 
 
         Bundle parameters = new Bundle();
-        parameters.putString("q", Integer.toString(ZipCode));
+        parameters.putString("q", "madison, wi");
         parameters.putString("type", "event");
         parameters.putString("fields", "id, name, description, place, start_time, end_time");
+        parameters.putString("limit", "100");
         System.out.println(parameters);
         PublicEventRequest.setParameters(parameters);
         PublicEventRequest.executeAsync();
