@@ -134,7 +134,6 @@ public class MainActivity extends Activity {
     {
         settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("DrawDistKey", 5);
         editor.commit();
     }
 

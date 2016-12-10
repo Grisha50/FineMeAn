@@ -3,4 +3,10 @@
     <string name="title_activity_maps">Map</string>
     <string name="facebook_app_id">1477839295565975</string>
     <string name="MYPREFS">MyPrefs</string>
+    <string name="DRAWDIST">DrawDistKey</string>
+    <string name="RESTROOMS">RestroomsKey</string>
+    <string name="ELEVATORS">ElevatorsKey</string>
+    <string name="FOUNTAINS">FountainsKey</string>
+    <string name="RAMPS">RampsKey</string>
+    <string name="EVENTS">EventsKey</string>
 </resources>
