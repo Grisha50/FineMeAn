@@ -3,7 +3,6 @@ package com.softwareengineeringapp.kamys.findmean;
 import android.content.Intent;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,14 +22,15 @@ import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.IOException;
 
+import static android.R.attr.tag;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private TextView info;
@@ -38,13 +38,10 @@ public class MainActivity extends Activity {
     private Button guestButton;
     private CallbackManager callbackManager;
     public List<JSONObject> mEventList;
-    public static SharedPreferences settings;
-    public static MainActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        instance = this;
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
@@ -77,9 +74,8 @@ public class MainActivity extends Activity {
                 String userToken  = loginResult.getAccessToken().getToken();
                 FacebookEventSearch searcher = new FacebookEventSearch();
                 mEventList = searcher.eventFinder(53706,24,false);
-                prefInit();
                 mapView();
-                //finish();
+                finish();
             }
 
             @Override
@@ -96,8 +92,6 @@ public class MainActivity extends Activity {
                 mapView();
             }
         });
-
-
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -128,26 +122,6 @@ public class MainActivity extends Activity {
                             o.get("description") == null &&
                             o.get("place") == null);
         }
-    }
-
-    public void prefInit()
-    {
-        settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.commit();
-    }
-
-    public static void editPref(String key, int value)
-    {
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(key, value);
-        editor.commit();
-    }
-
-    public int getPref(String key)
-    {
-        settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
-        return settings.getInt(key, 0);
     }
 
 

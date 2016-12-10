@@ -30,7 +30,11 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback  {
+import static android.R.attr.id;
+import static android.R.id.list;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
+{
 
     private GoogleMap mMap;
     public static MapsActivity instance = null;
@@ -38,6 +42,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button filter;
     private Button settings;
     private Button refresh;
+    ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
+    buildingObject bObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,28 +57,64 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
         refresh = (Button) findViewById(R.id.button4);
+
+
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MapsActivity.this,FilterWindow.class));
+                startActivity(new Intent(MapsActivity.this, FilterWindow.class));
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MapsActivity.this,SettingsWindow.class));
+                startActivity(new Intent(MapsActivity.this, SettingsWindow.class));
             }
         });
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FacebookEventSearch searcher = new FacebookEventSearch();
-                searcher.eventFinder(53703, 24, false);
+
             }
         });
     }
 
-    public void finishActivity() {
+    public void SetPins(String restroom, String elevator, String handicap, String studyArea)
+    {
+        DataBaseHelper myDb = new DataBaseHelper(this);
+        SQLiteDatabase db = myDb.getReadableDatabase();
+        mainList.clear();
+
+        Cursor cur = db.rawQuery("SELECT * FROM Amenities " +
+                "WHERE Bathrooms = ? " +
+                "AND Elevators = ? " +
+                "AND Hand = ? " +
+                "AND StudyArea", new String[]{restroom, elevator, handicap, studyArea});
+
+        if (cur.moveToFirst())
+        {
+            while (cur.isAfterLast() == false)
+            {
+                String name = cur.getString(cur.getColumnIndex("BuildingName"));
+                String hand = cur.getString(cur.getColumnIndex("Hand"));
+                String bath = cur.getString(cur.getColumnIndex("Bathrooms"));
+                String elev = cur.getString(cur.getColumnIndex("Elevators"));
+                String study = cur.getString(cur.getColumnIndex("StudyArea"));
+                String lat = cur.getString(cur.getColumnIndex("Lat"));
+                String longi = cur.getString(cur.getColumnIndex("Long"));
+                String link = cur.getString(cur.getColumnIndex("Link"));
+
+                bObject = new buildingObject(name, hand, bath, elev, study, lat, longi, link);
+                mainList.add(bObject);
+
+                cur.moveToNext();
+            }
+        }
+    }
+
+
+    public void finishActivity()
+    {
         super.finish();
         instance = null;
     }
@@ -89,69 +131,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        CameraUpdate center=
+        CameraUpdate center =
                 CameraUpdateFactory.newLatLng(new LatLng(43.070500,
                         -89.398364));
-        CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
 
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
         //mMap.setInfoWindowAdapter(new infoWindowAdapter() );
-/**
-        DataBaseHelper myDbHelper;
-        myDbHelper = new DataBaseHelper(this);
-        try
-        {
-            myDbHelper.createDataBase();
-        } catch (IOException ioe) {
-            throw new Error("Unable to create database");
-        }
-        try
-        {
-            //database is opened and read only atm.... Let's parse it for our values to enter
-            SQLiteDatabase myDb = myDbHelper.openDataBase();
-            String temp;
-
-            //Latitudes
-            Cursor crs1 = myDb.rawQuery("SELECT LAT FROM AMENITIES", null);
-            List<String> Lat = new ArrayList<String>();
-            while(crs1.moveToNext())
-            {
-                temp = crs1.getString(crs1.getColumnIndex("NAME"));
-                Lat.add(temp);
-            }
-
-            //Longitudes
-            Cursor crs2 = myDb.rawQuery("SELECT LONG FROM AMENITIES", null);
-            List<String> Long = new ArrayList<String>();
-            while(crs2.moveToNext())
-            {
-                temp = crs2.getString(crs2.getColumnIndex("NAME"));
-                Long.add(temp);
-            }
-
-            //Names
-            Cursor crs3 = myDb.rawQuery("SELECT BUILDINGNAME FROM AMENITIES", null);
-            List<String> BuildingName = new ArrayList<String>();
-            while(crs2.moveToNext())
-            {
-                temp = crs2.getString(crs2.getColumnIndex("NAME"));
-                BuildingName.add(temp);
-            }
-
-            for (int i = 0; i < BuildingName.size(); i++)
-            {
-                LatLng Adr = new LatLng(new Double(Lat.get(i)), new Double(Long.get(i)));
-                Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(BuildingName.get(i)));
-            }
-        }
-        catch(SQLException sqle)
-        {
-            throw sqle;
-        }
 
         LatLng Adr = new LatLng(43.070500, -89.398364);
         Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
-    **/}
     }
 
+}

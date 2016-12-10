@@ -18,11 +18,9 @@ import org.w3c.dom.Text;
 public class SettingsWindow extends Activity {
     private static SeekBar seek_bar;
     private static TextView textView;
-    private static TextView textView2;
     private static Button main_menu;
-    private static Button back;
+    private static Button log_off;
     public int distance;
-    public int hours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +29,16 @@ public class SettingsWindow extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         getWindow().setLayout((int)(dm.widthPixels*.8), (int)(dm.heightPixels));
-        seekBarDistance();
-        seekBarTime();
+        seekBar();
 
         main_menu = (Button) findViewById(R.id.main_menu_button);
-        back = (Button) findViewById(R.id.back_button);
+        log_off = (Button) findViewById(R.id.log_off_button);
 
         main_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MapsActivity.instance.finishActivity();
                 mainView();
-                finish();
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 finish();
             }
         });
@@ -60,11 +50,11 @@ public class SettingsWindow extends Activity {
         startActivity(intent);
     }
 
-    public void seekBarDistance() {
+    public void seekBar() {
         seek_bar = (SeekBar) findViewById(R.id.seekBar);
         textView = (TextView) findViewById(R.id.textView2);
         seek_bar.setMax(10);
-        seek_bar.setProgress(MainActivity.instance.getPref(getString(R.string.DRAWDIST)));
+        seek_bar.setProgress(5);
         textView.setText(seek_bar.getProgress() + " miles from your location");
         seek_bar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
@@ -72,7 +62,6 @@ public class SettingsWindow extends Activity {
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         distance = progress;
                         textView.setText(distance + " miles from your location");
-                        MainActivity.instance.editPref(getString(R.string.DRAWDIST), distance);
                     }
 
                     @Override
@@ -83,36 +72,6 @@ public class SettingsWindow extends Activity {
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         textView.setText(distance + " miles from your location");
-                        MainActivity.instance.editPref(getString(R.string.DRAWDIST), distance);
-                    }
-                }
-        );
-    }
-
-    public void seekBarTime() {
-        seek_bar = (SeekBar) findViewById(R.id.seekBar2);
-        textView2 = (TextView) findViewById(R.id.textView3);
-        seek_bar.setMax(24);
-        seek_bar.setProgress(MainActivity.instance.getPref(getString(R.string.TIME)));
-        textView2.setText("Within " + seek_bar.getProgress() + " hours from now");
-        seek_bar.setOnSeekBarChangeListener(
-                new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        hours = progress;
-                        textView2.setText("Within " + hours + " hours from now");
-                        MainActivity.instance.editPref(getString(R.string.TIME), hours);
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                        textView2.setText(hours + " miles from your location");
-                        MainActivity.instance.editPref(getString(R.string.TIME), hours);
                     }
                 }
         );
