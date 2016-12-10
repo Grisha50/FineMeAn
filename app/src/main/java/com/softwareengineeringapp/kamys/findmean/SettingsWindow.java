@@ -18,9 +18,11 @@ import org.w3c.dom.Text;
 public class SettingsWindow extends Activity {
     private static SeekBar seek_bar;
     private static TextView textView;
+    private static TextView textView2;
     private static Button main_menu;
     private static Button back;
     public int distance;
+    public int hours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,8 @@ public class SettingsWindow extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         getWindow().setLayout((int)(dm.widthPixels*.8), (int)(dm.heightPixels));
-        seekBar();
+        seekBarDistance();
+        seekBarTime();
 
         main_menu = (Button) findViewById(R.id.main_menu_button);
         back = (Button) findViewById(R.id.back_button);
@@ -57,7 +60,7 @@ public class SettingsWindow extends Activity {
         startActivity(intent);
     }
 
-    public void seekBar() {
+    public void seekBarDistance() {
         seek_bar = (SeekBar) findViewById(R.id.seekBar);
         textView = (TextView) findViewById(R.id.textView2);
         seek_bar.setMax(10);
@@ -81,6 +84,35 @@ public class SettingsWindow extends Activity {
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         textView.setText(distance + " miles from your location");
                         MainActivity.instance.editPref("DrawDistKey", distance);
+                    }
+                }
+        );
+    }
+
+    public void seekBarTime() {
+        seek_bar = (SeekBar) findViewById(R.id.seekBar2);
+        textView2 = (TextView) findViewById(R.id.textView3);
+        seek_bar.setMax(24);
+        seek_bar.setProgress(MainActivity.instance.getPref("DrawDistKey"));
+        textView2.setText("Within " + seek_bar.getProgress() + " hours from now");
+        seek_bar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        hours = progress;
+                        textView2.setText("Within " + hours + " hours from now");
+                        //MainActivity.instance.editPref("DrawDistKey", hours);
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        textView2.setText(hours + " miles from your location");
+                        //MainActivity.instance.editPref("DrawDistKey", hours);
                     }
                 }
         );

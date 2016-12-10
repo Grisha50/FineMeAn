@@ -26,6 +26,22 @@
             android:textAlignment="center"
             android:textSize="20sp" />
 
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar2"
+            android:layout_weight="0.10"
+            android:paddingTop="20sp" />
+
+        <TextView
+            android:text="Event Search Timeframe"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_weight="0.07"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
         <Button
             android:text="Main Menu"
             android:layout_width="match_parent"

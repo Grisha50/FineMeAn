@@ -66,7 +66,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FacebookEventSearch searcher = new FacebookEventSearch();
+                searcher.eventFinder(53703, 24, false);
             }
         });
     }
