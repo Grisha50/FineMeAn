@@ -5,62 +5,81 @@ package com.softwareengineeringapp.kamys.findmean;
  */
 
 public class buildingObject {
-    boolean bathroom = false ;
-    boolean handiCap = false ;
-    boolean drink = false ;
-    boolean elevator = false ;
+    String bathroom;
+    String handiCap;
+    String drink;
+    String elevator;
     String building ;
     String info ;
-    double Long;
-    double Lat ;
+    String lat;
+    String longi;
+    String Link;
 
 
-    buildingObject(boolean bath, boolean hand, double Long, double lat, boolean drink , boolean elev , String Name){
-     this.bathroom = bath ;
-        this.building  = Name ;
-        this.handiCap = hand ;
+    buildingObject(String Name, String hand, String bath, String elev, String study, String lat, String longi, String link){
+        this.bathroom = bath;
+        this.building  = Name;
+        this.handiCap = hand;
         this.elevator = elev;
-        this.drink = drink ;
-        this.Long = Long;
-        this.Lat = lat ;
+        this.drink = drink;
+        this.longi = longi;
+        this.lat = lat;
+        this.Link = link;
     }
 
     String BuildingName(){
         return building;
     }
     boolean getBath(){
-        return bathroom;
+        if (bathroom == "y")
+        {
+            return true;
+        }
+        return false;
     }
     boolean getHand(){
-        return handiCap;
+        if (handiCap == "y")
+        {
+            return true;
+        }
+        return false;
     }
     boolean getDrink(){
-        return drink;
+        if (drink == "y")
+        {
+            return true;
+        }
+        return false;
     }
     boolean getElev(){
-        return elevator ;
+        if (elevator == "y")
+        {
+            return true;
+        }
+        return false;
     }
 
     double longitude(){
-        return Long ;
+        double value = Double.parseDouble(longi);
+        return value;
     }
     double latitude(){
-        return Lat ;
+        double value = Double.parseDouble(lat);
+        return value;
     }
     String getInfo(){
-        if ( bathroom == true){
+        if ( bathroom == "y"){
             info += "Bathroom, ";
         }
-        if( handiCap == true){
-           info += "Handicapable, " ;
+        if( handiCap == "y"){
+            info += "Handicapable, " ;
         }
-        if( drink == true){
+        if( drink == "y"){
             info += "Drinking Fountain, ";
         }
-        if (elevator == true){
+        if (elevator == "y"){
             info +=" Elevator";
         }
-
         return info ;
     }
 }

@@ -30,6 +30,9 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import static android.R.attr.id;
+import static android.R.id.list;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback  {
 
     private GoogleMap mMap;
@@ -38,6 +41,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button filter;
     private Button settings;
     private Button refresh;
+    ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
+    buildingObject bObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 searcher.eventFinder(53703, 24, false);
             }
         });
+    }
+
+    public void SetPins(String restroom, String elevator, String handicap, String studyArea)
+    {
+        DataBaseHelper myDb = new DataBaseHelper(this);
+        SQLiteDatabase db = myDb.getReadableDatabase();
+        mainList.clear();
+
+        Cursor cur = db.rawQuery("SELECT * FROM Amenities " +
+                "WHERE Bathrooms = ? " +
+                "AND Elevators = ? " +
+                "AND Hand = ? " +
+                "AND StudyArea", new String[]{restroom, elevator, handicap, studyArea});
+
+        if (cur.moveToFirst())
+        {
+            while (cur.isAfterLast() == false)
+            {
+                String name = cur.getString(cur.getColumnIndex("BuildingName"));
+                String hand = cur.getString(cur.getColumnIndex("Hand"));
+                String bath = cur.getString(cur.getColumnIndex("Bathrooms"));
+                String elev = cur.getString(cur.getColumnIndex("Elevators"));
+                String study = cur.getString(cur.getColumnIndex("StudyArea"));
+                String lat = cur.getString(cur.getColumnIndex("Lat"));
+                String longi = cur.getString(cur.getColumnIndex("Long"));
+                String link = cur.getString(cur.getColumnIndex("Link"));
+
+                bObject = new buildingObject(name, hand, bath, elev, study, lat, longi, link);
+                mainList.add(bObject);
+
+                cur.moveToNext();
+            }
+        }
     }
 
     public void finishActivity() {

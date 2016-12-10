@@ -39,13 +39,14 @@
         android:paddingTop="10sp"
         android:paddingBottom="10sp"
         android:fontFamily="sans-serif"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        android:contentDescription="Allows the user to use application if they do not desire to use Facebook" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/appname"
-        android:textSize="80sp"
+        android:textSize="90sp"
         android:text="Find\nMe\nA..."
         android:textStyle="normal|bold|italic"
         android:textColor="#FFFFFF"
@@ -74,7 +75,8 @@
         android:paddingBottom="10sp"
         android:paddingTop="10sp"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/guestLogin" />
+        android:layout_alignEnd="@+id/guestLogin"
+        android:contentDescription="Allows user to use they're Facebook credentials to pull events from Facebook" />
 
 
 </RelativeLayout>

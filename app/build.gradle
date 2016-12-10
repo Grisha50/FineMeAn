@@ -38,5 +38,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.google.android.gms:play-services-analytics:9.6.1'
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     testCompile 'junit:junit:4.12'
 }
