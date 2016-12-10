@@ -134,7 +134,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
-        //mMap.setInfoWindowAdapter(new infoWindowAdapter() );
+
+        //Dummy Marker for testing
+        LatLng Adr = new LatLng(43.070500, -89.398364);
+        Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
+        mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
 /**
         DataBaseHelper myDbHelper;
         myDbHelper = new DataBaseHelper(this);
