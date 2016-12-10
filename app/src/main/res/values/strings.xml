@@ -9,4 +9,5 @@
     <string name="FOUNTAINS">FountainsKey</string>
     <string name="RAMPS">RampsKey</string>
     <string name="EVENTS">EventsKey</string>
+    <string name="TIME">TimeKey</string>
 </resources>

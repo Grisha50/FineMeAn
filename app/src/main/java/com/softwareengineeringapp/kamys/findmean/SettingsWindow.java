@@ -93,7 +93,7 @@ public class SettingsWindow extends Activity {
         seek_bar = (SeekBar) findViewById(R.id.seekBar2);
         textView2 = (TextView) findViewById(R.id.textView3);
         seek_bar.setMax(24);
-        seek_bar.setProgress(MainActivity.instance.getPref("DrawDistKey"));
+        seek_bar.setProgress(MainActivity.instance.getPref(getString(R.string.TIME)));
         textView2.setText("Within " + seek_bar.getProgress() + " hours from now");
         seek_bar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
@@ -101,7 +101,7 @@ public class SettingsWindow extends Activity {
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         hours = progress;
                         textView2.setText("Within " + hours + " hours from now");
-                        //MainActivity.instance.editPref("DrawDistKey", hours);
+                        MainActivity.instance.editPref(getString(R.string.TIME), hours);
                     }
 
                     @Override
@@ -112,7 +112,7 @@ public class SettingsWindow extends Activity {
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         textView2.setText(hours + " miles from your location");
-                        //MainActivity.instance.editPref("DrawDistKey", hours);
+                        MainActivity.instance.editPref(getString(R.string.TIME), hours);
                     }
                 }
         );

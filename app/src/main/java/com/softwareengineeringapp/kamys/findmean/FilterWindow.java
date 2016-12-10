@@ -29,6 +29,21 @@ public class FilterWindow extends Activity {
         final CheckBox checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
         final CheckBox checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
         final CheckBox checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
+        if (MainActivity.instance.getPref(getString(R.string.RESTROOMS)) == 1) {
+            checkBox1.setChecked(true);
+        }
+        if (MainActivity.instance.getPref(getString(R.string.ELEVATORS)) == 1) {
+            checkBox2.setChecked(true);
+        }
+        if (MainActivity.instance.getPref(getString(R.string.FOUNTAINS)) == 1) {
+            checkBox3.setChecked(true);
+        }
+        if (MainActivity.instance.getPref(getString(R.string.RAMPS)) == 1) {
+            checkBox4.setChecked(true);
+        }
+        if (MainActivity.instance.getPref(getString(R.string.EVENTS)) == 1) {
+            checkBox5.setChecked(true);
+        }
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
