@@ -30,6 +30,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONObject;
+
 import static android.R.attr.id;
 import static android.R.id.list;
 
@@ -41,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button filter;
     private Button settings;
     private Button refresh;
+    public List<JSONObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     buildingObject bObject;
 
@@ -53,6 +56,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        if (MainActivity.instance.getPref(getString(R.string.FACEBOOK)) == 1 ) {
+            mEventList = searcher(53706, 24, false);
+        }
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
         refresh = (Button) findViewById(R.id.button4);
@@ -71,8 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FacebookEventSearch searcher = new FacebookEventSearch();
-                searcher.eventFinder(53703, 24, false);
+                mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
             }
         });
     }
@@ -113,6 +118,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void finishActivity() {
         super.finish();
         instance = null;
+    }
+
+    public List<JSONObject> searcher(int zipcode, int time, boolean permissions) {
+        FacebookEventSearch search = new FacebookEventSearch();
+        mEventList = search.eventFinder(zipcode, time, permissions);
+        return mEventList;
     }
 
     /**

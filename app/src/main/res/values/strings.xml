@@ -10,4 +10,5 @@
     <string name="RAMPS">RampsKey</string>
     <string name="EVENTS">EventsKey</string>
     <string name="TIME">TimeKey</string>
+    <string name="FACEBOOK">FacebookKey</string>
 </resources>

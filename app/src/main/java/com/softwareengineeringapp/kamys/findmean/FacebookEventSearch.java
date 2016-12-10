@@ -64,8 +64,8 @@ public class FacebookEventSearch {
                                 long startTime = dateFormat.parse(start).getTime();
                                 long endTime = dateFormat.parse(end).getTime();
                                 if (startTime - currTime < (3600 * TimeFrame) && endTime - currTime > 0){
-                                    //System.out.println(startTime - currTime);
-                                    //System.out.println(endTime - currTime);
+                                    System.out.println(startTime - currTime);
+                                    System.out.println(endTime - currTime);
                                     System.out.println("Unix timestamp: " + startTime);
                                 } else {
                                     System.out.println(temp.getString("id") + " was removed");

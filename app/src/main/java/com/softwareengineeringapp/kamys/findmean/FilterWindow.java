@@ -72,6 +72,7 @@ public class FilterWindow extends Activity {
                 } else {
                     MainActivity.instance.editPref(getString(R.string.EVENTS), 0);
                 }
+                finish();
             }
         });
     }

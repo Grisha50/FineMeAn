@@ -13,11 +13,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -37,7 +39,7 @@ public class MainActivity extends Activity {
     private LoginButton loginButton;
     private Button guestButton;
     private CallbackManager callbackManager;
-    public List<JSONObject> mEventList;
+
     public static SharedPreferences settings;
     public static MainActivity instance = null;
 
@@ -67,17 +69,13 @@ public class MainActivity extends Activity {
         // Gets key hash value off your machine for facebook authentication.
         //DO NOT TOUCH THIS TRY CATCH STATEMENTs
 
-
+        prefInit();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-
-
+            public void onSuccess(final LoginResult loginResult) {
                 String userID = loginResult.getAccessToken().getUserId() ;
                 String userToken  = loginResult.getAccessToken().getToken();
-                FacebookEventSearch searcher = new FacebookEventSearch();
-                mEventList = searcher.eventFinder(53706,24,false);
-                prefInit();
+
                 mapView();
                 //finish();
             }
@@ -91,6 +89,7 @@ public class MainActivity extends Activity {
             }
         });
 
+
         guestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v) {
                 mapView();
@@ -103,12 +102,10 @@ public class MainActivity extends Activity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void mapView()
-    {
+    public void mapView() {
         Intent intent = new Intent(this,MapsActivity.class);
         startActivity(intent);
     }
-
 
     public void FacebookEventSearchTest() throws Exception{
         //Testing FacebookEventSearch
@@ -137,8 +134,9 @@ public class MainActivity extends Activity {
         editor.commit();
     }
 
-    public static void editPref(String key, int value)
+    public void editPref(String key, int value)
     {
+        settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
         editor.commit();
