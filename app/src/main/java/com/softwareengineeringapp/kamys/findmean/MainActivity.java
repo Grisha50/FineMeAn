@@ -3,6 +3,7 @@ package com.softwareengineeringapp.kamys.findmean;
 import android.content.Intent;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,10 +38,13 @@ public class MainActivity extends Activity {
     private Button guestButton;
     private CallbackManager callbackManager;
     public List<JSONObject> mEventList;
+    public static SharedPreferences settings;
+    public static MainActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
@@ -73,6 +77,7 @@ public class MainActivity extends Activity {
                 String userToken  = loginResult.getAccessToken().getToken();
                 FacebookEventSearch searcher = new FacebookEventSearch();
                 mEventList = searcher.eventFinder(53706,24,false);
+                prefInit();
                 mapView();
                 //finish();
             }
@@ -123,6 +128,27 @@ public class MainActivity extends Activity {
                             o.get("description") == null &&
                             o.get("place") == null);
         }
+    }
+
+    public void prefInit()
+    {
+        settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("DrawDistKey", 5);
+        editor.commit();
+    }
+
+    public static void editPref(String key, int value)
+    {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
+    public int getPref(String key)
+    {
+        settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
+        return settings.getInt(key, 0);
     }
 
 
