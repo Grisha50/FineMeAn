@@ -19,7 +19,7 @@ public class SettingsWindow extends Activity {
     private static SeekBar seek_bar;
     private static TextView textView;
     private static Button main_menu;
-    private static Button log_off;
+    private static Button back;
     public int distance;
 
     @Override
@@ -32,13 +32,20 @@ public class SettingsWindow extends Activity {
         seekBar();
 
         main_menu = (Button) findViewById(R.id.main_menu_button);
-        log_off = (Button) findViewById(R.id.log_off_button);
+        back = (Button) findViewById(R.id.back_button);
 
         main_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MapsActivity.instance.finishActivity();
                 mainView();
+                finish();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 finish();
             }
         });

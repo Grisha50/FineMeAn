@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
                 FacebookEventSearch searcher = new FacebookEventSearch();
                 mEventList = searcher.eventFinder(53706,24,false);
                 mapView();
-                finish();
+                //finish();
             }
 
             @Override

@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/appname"
         android:textSize="80sp"
-        android:text="Find\nMe\nAn..."
+        android:text="Find\nMe\nA..."
         android:textStyle="normal|bold|italic"
         android:textColor="#FFFFFF"
         android:fontFamily="serif"

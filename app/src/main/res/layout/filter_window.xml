@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_weight="0"
     android:layout_gravity="center_vertical|center_horizontal"
-    android:background="#f0f3bd">
+    android:background="#f0f3bd"
+    android:orientation="vertical">
 
     <TableLayout
         android:layout_height="match_parent"
@@ -21,16 +22,39 @@
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkBox5"
+                android:id="@+id/checkBox1"
                 android:layout_weight=".5"
-                android:text="Restroom" />
+                android:text="Restroom"
+                android:textSize="24sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
             <CheckBox
-                android:text="Water Fountains"
-                android:layout_width="match_parent"
+                android:text="Elevators"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/checkBox2"
+                android:layout_weight=".5"
+                android:textSize="24sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <CheckBox
+                android:text="Water Fountain"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkBox"
-                android:layout_weight=".5" />
+                android:id="@+id/checkBox3"
+                android:layout_weight=".5"
+                android:textSize="24sp" />
+
         </TableRow>
 
         <TableRow
@@ -40,18 +64,11 @@
             <CheckBox
                 android:text="Ramps"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/checkBox6"
-                android:layout_weight=".5" />
-
-            <CheckBox
-                android:text="Elevators"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/checkBox2"
-                android:layout_weight=".5" />
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox4"
+                android:layout_weight=".5"
+                android:textSize="24sp" />
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
@@ -60,35 +77,18 @@
                 android:text="Events"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkBox7"
-                android:layout_weight=".5" />
-
-            <CheckBox
-                android:text="CheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox3"
-                android:layout_weight=".5" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <CheckBox
-                android:text="CheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox8"
-                android:layout_weight=".5" />
-
-            <CheckBox
-                android:text="CheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/checkBox4"
-                android:layout_weight=".5" />
+                android:layout_weight=".5"
+                android:textSize="24sp" />
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:text="Filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filterButtion2"
+        android:textSize="18sp"
+        android:textAlignment="center" />
 
 </LinearLayout>
