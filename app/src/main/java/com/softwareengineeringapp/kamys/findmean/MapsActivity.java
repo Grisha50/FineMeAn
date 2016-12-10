@@ -134,6 +134,66 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
+<<<<<<< HEAD
+=======
+
+        //Dummy Marker for testing
+        LatLng Adr = new LatLng(43.070500, -89.398364);
+        Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
+        mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
+/**
+        DataBaseHelper myDbHelper;
+        myDbHelper = new DataBaseHelper(this);
+        try
+        {
+            myDbHelper.createDataBase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+        try
+        {
+            //database is opened and read only atm.... Let's parse it for our values to enter
+            SQLiteDatabase myDb = myDbHelper.openDataBase();
+            String temp;
+
+            //Latitudes
+            Cursor crs1 = myDb.rawQuery("SELECT LAT FROM AMENITIES", null);
+            List<String> Lat = new ArrayList<String>();
+            while(crs1.moveToNext())
+            {
+                temp = crs1.getString(crs1.getColumnIndex("NAME"));
+                Lat.add(temp);
+            }
+
+            //Longitudes
+            Cursor crs2 = myDb.rawQuery("SELECT LONG FROM AMENITIES", null);
+            List<String> Long = new ArrayList<String>();
+            while(crs2.moveToNext())
+            {
+                temp = crs2.getString(crs2.getColumnIndex("NAME"));
+                Long.add(temp);
+            }
+
+            //Names
+            Cursor crs3 = myDb.rawQuery("SELECT BUILDINGNAME FROM AMENITIES", null);
+            List<String> BuildingName = new ArrayList<String>();
+            while(crs2.moveToNext())
+            {
+                temp = crs2.getString(crs2.getColumnIndex("NAME"));
+                BuildingName.add(temp);
+            }
+
+            for (int i = 0; i < BuildingName.size(); i++)
+            {
+                LatLng Adr = new LatLng(new Double(Lat.get(i)), new Double(Long.get(i)));
+                Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(BuildingName.get(i)));
+            }
+        }
+        catch(SQLException sqle)
+        {
+            throw sqle;
+        }
+>>>>>>> origin/Database
 
         //LatLng Adr = new LatLng(43.070500, -89.398364);
         //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
