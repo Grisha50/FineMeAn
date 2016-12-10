@@ -22,6 +22,7 @@ import java.util.List;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -46,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public List<JSONObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     buildingObject bObject;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
             }
         });
+        searchView = (SearchView) findViewById(R.id.searchbar);
+        searchView.setQueryHint("Search View");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        SetPins("y", "y", "y", "y");
     }
 
     public void SetPins(String restroom, String elevator, String handicap, String studyArea)
@@ -92,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 "WHERE Bathrooms = ? " +
                 "AND Elevators = ? " +
                 "AND Hand = ? " +
-                "AND StudyArea", new String[]{restroom, elevator, handicap, studyArea});
+                "AND StudyArea = ?", new String[]{restroom, elevator, handicap, studyArea});
 
         if (cur.moveToFirst())
         {
@@ -113,9 +131,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 cur.moveToNext();
             }
         }
+        cur.close();
     }
 
+
     public void finishActivity() {
+
         super.finish();
         instance = null;
     }
