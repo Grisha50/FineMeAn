@@ -111,7 +111,7 @@ public class SettingsWindow extends Activity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
-                        textView2.setText(hours + " miles from your location");
+                        textView2.setText("Within " + hours + " hours from now");
                         MainActivity.instance.editPref(getString(R.string.TIME), hours);
                     }
                 }
