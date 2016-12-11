@@ -130,13 +130,10 @@ public class MainActivity extends Activity {
     public void prefInit()
     {
         settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.commit();
     }
 
     public void editPref(String key, int value)
     {
-        settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
         editor.commit();
@@ -144,7 +141,6 @@ public class MainActivity extends Activity {
 
     public int getPref(String key)
     {
-        settings = getSharedPreferences(getString(R.string.MYPREFS), 0);
         return settings.getInt(key, 0);
     }
 
