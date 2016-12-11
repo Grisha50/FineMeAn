@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import com.facebook.AccessToken;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -24,6 +23,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,7 +31,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.auth.FacebookAuthCredential;
 
 import org.json.JSONObject;
 
@@ -60,8 +59,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        if (AccessToken.getCurrentAccessToken() != null) {
-            mEventList = searcher(53706, 48, false);
+        if (MainActivity.instance.getPref(getString(R.string.FACEBOOK)) == 1 ) {
+            mEventList = searcher(53706, 24, false);
         }
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
@@ -91,6 +90,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public boolean onQueryTextSubmit(String query) {
+                  String comparison = query.toLowerCase();
+                String building ;
+                boolean found = false ;
+                 for( buildingObject  b : mainList){
+                     building = b.BuildingName().toLowerCase();
+                     if(building == comparison){
+                         LatLng Cord = new LatLng(b.latitude(),b.longitude()) ;
+                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Cord,17));
+                         found = true ;
+                     }
+
+                 }
+                if( found == false){
+                    Toast.makeText(getBaseContext(),"Building Not Found", Toast.LENGTH_LONG);
+                }
                 return false;
             }
 
@@ -100,6 +114,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         SetPins("y", "y", "y", "y");
+    }
+    
+        public void createPins(ArrayList<buildingObject> pinList){
+        int items=pinList.size();
+        for (int i=0; i<items; i++){
+            double lat = Double.parseDouble(pinList.get(i).lat);
+            double longi = Double.parseDouble(pinList.get(i).longi);
+            LatLng Adr = new LatLng(lat, longi);
+            Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
+        }
     }
 
     public void SetPins(String restroom, String elevator, String handicap, String studyArea)
@@ -170,12 +194,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(zoom);
 
         //Dummy Marker for testing
-        LatLng Adr = new LatLng(43.070500, -89.398364);
-        Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
+        //LatLng Adr = new LatLng(43.070500, -89.398364);
+        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
+        createPins(mainList);
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
 
         //LatLng Adr = new LatLng(43.070500, -89.398364);
         //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
     }
 }
-

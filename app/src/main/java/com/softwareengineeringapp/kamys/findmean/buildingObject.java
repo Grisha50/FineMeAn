@@ -10,6 +10,7 @@ public class buildingObject {
     String drink;
     String elevator;
     String building ;
+    String study;
     String info ;
     String lat;
     String longi;
@@ -21,10 +22,10 @@ public class buildingObject {
         this.building  = Name;
         this.handiCap = hand;
         this.elevator = elev;
-        this.drink = drink;
         this.longi = longi;
         this.lat = lat;
         this.Link = link;
+        this.study = study;
     }
 
     String BuildingName(){
@@ -44,13 +45,13 @@ public class buildingObject {
         }
         return false;
     }
-    boolean getDrink(){
-        if (drink == "y")
-        {
+    boolean getStudy() {
+        if (study == "y") {
             return true;
         }
         return false;
     }
+
     boolean getElev(){
         if (elevator == "y")
         {
@@ -73,9 +74,6 @@ public class buildingObject {
         }
         if( handiCap == "y"){
             info += "Handicapable, " ;
-        }
-        if( drink == "y"){
-            info += "Drinking Fountain, ";
         }
         if (elevator == "y"){
             info +=" Elevator";
