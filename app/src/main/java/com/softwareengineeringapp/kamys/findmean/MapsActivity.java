@@ -89,6 +89,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public boolean onQueryTextSubmit(String query) {
+                  String comparison = query.toLowerCase();
+                String building ;
+                boolean found = false ;
+                 for( buildingObject  b : mainList){
+                     building = b.BuildingName().toLowerCase();
+                     if(building == comparison){
+                         LatLng Cord = new LatLng(b.latitude(),b.longitude()) ;
+                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Cord,17));
+                         found = true ;
+                     }
+
+                 }
+                if( found == false){
+                    Toast.makeText(getBaseContext(),"Building Not Found", Toast.LENGTH_LONG);
+                }
                 return false;
             }
 
