@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.facebook.AccessToken;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -30,6 +31,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FacebookAuthCredential;
 
 import org.json.JSONObject;
 
@@ -58,8 +60,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        if (MainActivity.instance.getPref(getString(R.string.FACEBOOK)) == 1 ) {
-            mEventList = searcher(53706, 24, false);
+        if (AccessToken.getCurrentAccessToken() != null) {
+            mEventList = searcher(53706, 48, false);
         }
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
