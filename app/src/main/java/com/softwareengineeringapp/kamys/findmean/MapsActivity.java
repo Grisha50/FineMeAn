@@ -99,6 +99,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         SetPins("y", "y", "y", "y");
     }
+    
+        public void createPins(ArrayList<buildingObject> pinList){
+        int items=pinList.size();
+        for (int i=0; i<items; i++){
+            double lat = Double.parseDouble(pinList.get(i).lat);
+            double longi = Double.parseDouble(pinList.get(i).longi);
+            LatLng Adr = new LatLng(lat, longi);
+            Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
+        }
+    }
 
     public void SetPins(String restroom, String elevator, String handicap, String studyArea)
     {
@@ -168,8 +178,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(zoom);
 
         //Dummy Marker for testing
-        LatLng Adr = new LatLng(43.070500, -89.398364);
-        Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
+        //LatLng Adr = new LatLng(43.070500, -89.398364);
+        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
+        createPins(mainList);
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
 
         //LatLng Adr = new LatLng(43.070500, -89.398364);
