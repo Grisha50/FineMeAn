@@ -64,39 +64,45 @@ public class FacebookEventSearch {
                                 long startTime = dateFormat.parse(start).getTime();
                                 long endTime = dateFormat.parse(start).getTime() + 3600000 * 2;
                                 if (startTime - currTime < (3600000 * TimeFrame) && endTime - currTime > 0){
-                                    System.out.println("Unix timestamp: " + startTime);
+                                    System.out.println(temp.getString("id") + " was added");
+                                    System.out.println(temp);
                                     //System.out.println(temp.getString("place"));
                                     try {
-                                        FacebookList.add(new
-                                                facebookObject(temp.getString("name"), temp.getString("description"), temp.getString("id"), temp.getString("start_time"), temp.getJSONObject("place").getString("longitude"), temp.getJSONObject("place").getString("latitude")));
+                                        FacebookList.add(new facebookObject(temp.getString("name"), temp.getString("description"), temp.getString("id"), temp.getString("start_time"), temp.getJSONObject("place").getJSONObject("location").getString("longitude"), temp.getJSONObject("place").getJSONObject("location").getString("latitude")));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
 
                                 } else {
                                     System.out.println(temp.getString("id") + " was removed");
-                                    try {
-                                        System.out.println(temp);
-                                        System.out.println(temp.getJSONObject("place"));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    System.out.println(temp.getString("start_time"));
-                                    System.out.print("start - curr = ");
-                                    System.out.println((startTime - currTime) / 3600000);
-                                    System.out.print("end - curr = ");
-                                    System.out.println((endTime - currTime) / 3600000);
+                                    //try {
+                                    //    System.out.println(temp);
+                                    //    System.out.println(temp.getJSONObject("place"));
+                                    //} catch (JSONException e) {
+                                    //    e.printStackTrace();
+                                    //}
+                                    //System.out.println(temp.getString("start_time"));
+                                    //System.out.print("start - curr = ");
+                                    //System.out.println((startTime - currTime) / 3600000);
+                                    //System.out.print("end - curr = ");
+                                    //System.out.println((endTime - currTime) / 3600000);
                                     iter.remove();
                                 }
                             }
-                            System.out.println(EventList);
+                            Iterator<facebookObject> iterFace = FacebookList.iterator();
+                            while (iterFace.hasNext()) {
+                                facebookObject x = iterFace.next();
+                                System.out.println("long: " + x.getLongitude());
+                                System.out.println("lat: " + x.getLatitude());
+
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }catch (NullPointerException e){
-
                         }
+                        MapsActivity.instance.createEventPins(FacebookList);
                     }
                 });
 
