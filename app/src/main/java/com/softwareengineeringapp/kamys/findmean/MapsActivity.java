@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback  {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     public static MapsActivity instance = null;
@@ -59,6 +59,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MapsActivity.this,FilterWindow.class));
+                if(FilterWindow.filterUpdate){
+                    String arg[] = FilterWindow.updatedArgs;
+                    SetPins(arg[0], arg[1], arg[2], arg[3]);
+                    try{wait(10000);}catch(Exception e){}
+                    refresh.performClick();
+                }
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
                 mMap.clear();
-                createPins(mainList);
+                createPins(filteredList);
                 createEventPins(mEventList);
             }
         });
@@ -178,7 +184,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 args[i] = handicap;
             }
             if(studyArea.equals("x")){
-                //query += "StudyArea = * ";
+                query = query.substring(0, query.length() - 4);
             }else{
                 query += "StudyArea = ? ";
                 String []tmp = args;

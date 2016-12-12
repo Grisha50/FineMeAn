@@ -6,7 +6,7 @@
     <string name="DRAWDIST">DrawDistKey</string>
     <string name="RESTROOMS">RestroomsKey</string>
     <string name="ELEVATORS">ElevatorsKey</string>
-    <string name="FOUNTAINS">FountainsKey</string>
+    <string name="STUDY">StudyKey</string>
     <string name="RAMPS">RampsKey</string>
     <string name="EVENTS">EventsKey</string>
     <string name="TIME">TimeKey</string>
