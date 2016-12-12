@@ -37,7 +37,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button filter;
     private Button settings;
     private Button refresh;
-    public static List<facebookObject> mEventList;
     private ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     public static ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
     private buildingObject bObject;
@@ -62,9 +61,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 Intent act = new Intent(MapsActivity.this, FilterWindow.class);
 
                 startActivityForResult(act, 1);
+=======
+                startActivity(new Intent(MapsActivity.this,FilterWindow.class));
+                if(MainActivity.instance.getPref("FilterUpdateKey") == 1){
+                    String arg[] = FilterWindow.updatedArgs;
+                    SetPins(arg[0], arg[1], arg[2], arg[3]);
+                    //try{wait(10000);}catch(Exception e){}
+                    mMap.clear();
+                    createPins(filteredList);
+                    if (AccessToken.getCurrentAccessToken() != null) {
+                        searcher(53706, 100, false);
+                    }
+                }
+>>>>>>> origin/Database
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
@@ -76,10 +89,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
                 mMap.clear();
                 createPins(filteredList);
-                searcher(53706, 100, false);
+                if (AccessToken.getCurrentAccessToken() != null) {
+                    searcher(53706, 100, false);
+                    //searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
+                }
             }
         });
 
@@ -130,9 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void createEventPins(List<facebookObject> eventList) {
         if (AccessToken.getCurrentAccessToken() != null) {
             int items = eventList.size();
-            System.out.println("item size:" + items);
             for (int i = 0; i < items; i++) {
-                System.out.println("I've been here");
                 double lat = Double.parseDouble(eventList.get(i).getLatitude());
                 double longi = Double.parseDouble(eventList.get(i).getLongitude());
                 LatLng Adr = new LatLng(lat, longi);
