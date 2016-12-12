@@ -205,7 +205,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 double lat = Double.parseDouble(eventList.get(i).getLongitude());
                 double longi = Double.parseDouble(eventList.get(i).getLatitude());
                 LatLng Adr = new LatLng(lat, longi);
-                Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(eventList.get(i).eventName));
+                Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(eventList.get(i).eventName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             }
         }
     }
