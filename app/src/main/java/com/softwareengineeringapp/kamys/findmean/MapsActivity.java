@@ -48,8 +48,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button refresh;
     public List<facebookObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
+    ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
     buildingObject bObject;
     private SearchView searchView;
+    boolean firstRun = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,17 +129,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
     public void SetPins(String restroom, String elevator, String handicap, String studyArea)
     {
         DataBaseHelper myDb = new DataBaseHelper(this);
         SQLiteDatabase db = myDb.getReadableDatabase();
         mainList.clear();
+        Cursor cur;
 
-        Cursor cur = db.rawQuery("SELECT * FROM Amenities " +
-                "WHERE Bathrooms = ? " +
-                "AND Elevators = ? " +
-                "AND Hand = ? " +
-                "AND StudyArea = ?", new String[]{restroom, elevator, handicap, studyArea});
+        if (firstRun == true)
+        {
+            cur = db.rawQuery("SELECT * FROM Amenities", null);
+        }
+
+        else
+        {
+            cur = db.rawQuery("SELECT * FROM Amenities " +
+                    "WHERE Bathrooms = ? " +
+                    "AND Elevators = ? " +
+                    "AND Hand = ? " +
+                    "AND StudyArea = ?", new String[]{restroom, elevator, handicap, studyArea});
+        }
 
         if (cur.moveToFirst())
         {
@@ -153,12 +165,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String link = cur.getString(cur.getColumnIndex("Link"));
 
                 bObject = new buildingObject(name, hand, bath, elev, study, lat, longi, link);
-                mainList.add(bObject);
+
+                if (firstRun == true)
+                {
+                    mainList.add(bObject);
+                }
+                else
+                {
+                    filteredList.add(bObject);
+                }
 
                 cur.moveToNext();
             }
         }
         cur.close();
+        firstRun = false;
     }
 
 
