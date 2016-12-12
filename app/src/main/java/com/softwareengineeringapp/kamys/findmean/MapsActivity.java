@@ -33,7 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button filter;
     private Button settings;
     private Button refresh;
-    public List<facebookObject> mEventList;
+    public static List<facebookObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
     buildingObject bObject;
