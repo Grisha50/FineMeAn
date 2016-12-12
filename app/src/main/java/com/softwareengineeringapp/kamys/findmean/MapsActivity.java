@@ -74,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
 
                 mMap.clear();
-                //createPins(mainList);
+                createPins(mainList);
                 searcher(53706, 100, false);
             }
         });
@@ -291,7 +291,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Dummy Marker for testing
         //LatLng Adr = new LatLng(43.070500, -89.398364);
         //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
-        //createPins(mainList);
+        createPins(mainList);
         if (AccessToken.getCurrentAccessToken() != null) {
             searcher(53706, 100, false);
         }
