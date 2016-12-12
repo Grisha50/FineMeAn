@@ -42,21 +42,21 @@ public class MapsActvityInstrumentedTest {
     public void buildingSetup(){
         mList = new ArrayList<buildingObject>();
         //mList.add(new buildingObject(true, true, -89.4067, 43.0755, true, true, "Van Hise"));
-        MapsActivity.buildings = mList;
+        MapsActivity.filteredList = mList;
     }
 
     @Test
     public void objectIntegrityTest(){
         buildingObject b = mList.get(0);
         assertTrue("ERROR: Building Object fields differ from instantiation",
-                b.getBath() && b.getDrink() && b.getElev() && b.getHand() &&
+                b.getBath() && b.getStudy() && b.getElev() && b.getHand() &&
                         !b.getInfo().equals("") && Double.compare(b.longitude(), -89.4067)
                         == 0 && Double.compare(b.latitude(), 43.0755) == 0);
 
-        facebookObject f = new facebookObject("Test!", "3:00PM", "11/23/2016", "1102 Regent St.");
+        facebookObject f = new facebookObject("Test!", "Testing...","ID!", "11/23/2016", "0.0", "0.0");
         assertTrue("ERROR: Facebook Object fields differ from instantiation",
-                f.getAddress().equals("1102 Regent St.") && f.getDate().equals("11/23/2016") &&
-                        f.getTime().equals("3:00PM") && f.getEventName().equals("Test!"));
+                f.getDate().equals("11/23/2016") &&
+                        f.getEventName().equals("Test!"));
     }
 
     @Test
