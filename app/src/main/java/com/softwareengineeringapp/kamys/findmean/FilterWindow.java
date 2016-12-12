@@ -12,7 +12,6 @@ import android.widget.CheckBox;
  */
 
 public class FilterWindow extends Activity {
-    public static boolean filterUpdate;
     public static String[] updatedArgs = new String[5];
     private Button filterButton;
 
@@ -24,7 +23,7 @@ public class FilterWindow extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         getWindow().setLayout((int)(dm.widthPixels*.8), (int)(dm.heightPixels*.4));
 
-        filterUpdate = false;
+        MainActivity.instance.editPref("FilterUpdateKey", 0);
 
         filterButton = (Button) findViewById(R.id.filterButtion2);
         final CheckBox checkBox[] = {(CheckBox) findViewById(R.id.checkBox1),
@@ -48,7 +47,7 @@ public class FilterWindow extends Activity {
                     updatedArgs[i] = checkBox[i].isChecked()?"y":"x";
                     i++;
                 }
-                filterUpdate = true;
+                MainActivity.instance.editPref("FilterUpdateKey", 1);
                 finish();
             }
         });
