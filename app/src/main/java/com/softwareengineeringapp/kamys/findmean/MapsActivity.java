@@ -15,8 +15,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -39,6 +41,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     buildingObject bObject;
     private SearchView searchView;
     boolean firstRun = true;
+    public static ArrayList<String> buildingids = new ArrayList<>();
+    public static HashMap<Marker, facebookObject> facebookMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +128,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng Adr = new LatLng(lat, longi);
             Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
             buildings.add(i, pinList.get(i));
+            buildingids.add(marker.getId());
+        }
+    }
+
+    public void createEventPins(List<facebookObject> eventList) {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            int items = eventList.size();
+            System.out.println("item size:" + items);
+            for (int i = 0; i < items; i++) {
+                System.out.println("I've been here");
+                double lat = Double.parseDouble(eventList.get(i).getLatitude());
+                double longi = Double.parseDouble(eventList.get(i).getLongitude());
+                LatLng Adr = new LatLng(lat, longi);
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(Adr)
+                        .title(eventList.get(i).eventName)
+                        .icon(BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                facebookMap.put(marker, eventList.get(i));
+            }
         }
     }
 

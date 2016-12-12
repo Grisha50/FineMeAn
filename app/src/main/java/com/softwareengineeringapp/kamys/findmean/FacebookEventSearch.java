@@ -74,7 +74,7 @@ public class FacebookEventSearch {
                                     }
 
                                 } else {
-                                    System.out.println(temp.getString("id") + " was removed");
+                                    //System.out.println(temp.getString("id") + " was removed");
                                     //try {
                                     //    System.out.println(temp);
                                     //    System.out.println(temp.getJSONObject("place"));
@@ -161,7 +161,7 @@ public class FacebookEventSearch {
         parameters.putString("q", "madison, wi");
         parameters.putString("type", "event");
         parameters.putString("fields", "id, name, description, place, start_time");
-        parameters.putString("limit", "100");
+        parameters.putString("limit", "200");
         System.out.println(parameters);
         PublicEventRequest.setParameters(parameters);
         PublicEventRequest.executeAsync();
