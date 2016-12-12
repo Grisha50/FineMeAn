@@ -67,7 +67,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //try{wait(10000);}catch(Exception e){}
                     mMap.clear();
                     createPins(filteredList);
-                    createEventPins(mEventList);
+                    if (AccessToken.getCurrentAccessToken() != null) {
+                        searcher(53706, 100, false);
+                    }
                 }
             }
         });
@@ -83,7 +85,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
                 mMap.clear();
                 createPins(filteredList);
-                searcher(53706, 100, false);
+                if (AccessToken.getCurrentAccessToken() != null) {
+                    searcher(53706, 100, false);
+                }
             }
         });
         searchView = (SearchView) findViewById(R.id.searchbar);
