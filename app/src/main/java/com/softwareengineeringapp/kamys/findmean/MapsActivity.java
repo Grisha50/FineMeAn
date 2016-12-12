@@ -269,7 +269,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     void searcher(int zipcode, int time, boolean permissions) {
         FacebookEventSearch search = new FacebookEventSearch();
-        mEventList = search.eventFinder(zipcode, time, permissions);
+        mEventList = search.eventFinder(zipcode, MainActivity.instance.getPref("TimeKey"), permissions);
     }
 
 
