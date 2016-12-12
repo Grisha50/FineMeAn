@@ -85,20 +85,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                  String comparison = query.toLowerCase();
+                String comparison = query.toLowerCase();
                 String building ;
                 boolean found = false ;
-                 for( buildingObject  b : mainList){
-                     building = b.BuildingName().toLowerCase();
-                     if(building == comparison){
-                         LatLng Cord = new LatLng(b.latitude(),b.longitude()) ;
-                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Cord,17));
-                         found = true ;
+                 for(int i=0; i<mainList.size(); i++){
+                     building = mainList.get(i).building.toLowerCase();
+                     if(building.equals(comparison)){
+                         double lat = Double.parseDouble(mainList.get(i).lat);
+                         double longi = Double.parseDouble(mainList.get(i).longi);
+                         LatLng Cord = new LatLng(lat,longi) ;
+                         CameraUpdate center=
+                                 CameraUpdateFactory.newLatLng(Cord);
+                         CameraUpdate zoom=CameraUpdateFactory.zoomTo(16);
+
+                         mMap.moveCamera(center);
+                         mMap.animateCamera(zoom);
+                         Marker marker = mMap.addMarker(new MarkerOptions().position(Cord).title(mainList.get(i).building));
+                         found=true;
                      }
 
                  }
                 if( found == false){
-                    Toast.makeText(getBaseContext(),"Building Not Found", Toast.LENGTH_LONG);
+                    Log.d("Building not found","Not found");
                 }
                 return false;
             }
