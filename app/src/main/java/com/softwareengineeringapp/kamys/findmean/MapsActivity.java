@@ -10,6 +10,7 @@ import com.facebook.AccessToken;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -116,7 +117,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             double lat = Double.parseDouble(pinList.get(i).lat);
             double longi = Double.parseDouble(pinList.get(i).longi);
             LatLng Adr = new LatLng(lat, longi);
-            Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(Adr)
+                    .title(pinList.get(i).building));
             buildings.add(i, pinList.get(i));
         }
     }
@@ -191,7 +194,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 args[i] = studyArea;
             }
 
-            if(restroom.equals("x") && elevator.equals("x") && handicap.equals("x") && studyArea.equals("x")) {
+            if(restroom.equals("x") && elevator.equals("x")
+                    && handicap.equals("x") && studyArea.equals("x")) {
                 cur = db.rawQuery("SELECT * FROM Amenities", args);
             }else{
                 cur = db.rawQuery(query, args);
@@ -250,7 +254,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 double lat = Double.parseDouble(eventList.get(i).getLongitude());
                 double longi = Double.parseDouble(eventList.get(i).getLatitude());
                 LatLng Adr = new LatLng(lat, longi);
-                Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(eventList.get(i).eventName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(Adr)
+                        .title(eventList.get(i).eventName)
+                        .icon(BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
             }
         }
     }
