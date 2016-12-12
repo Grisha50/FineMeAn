@@ -10,6 +10,7 @@ import com.facebook.AccessToken;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -271,19 +272,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         FacebookEventSearch search = new FacebookEventSearch();
         mEventList = search.eventFinder(zipcode, time, permissions);
         return mEventList;
-    }
-
-    public void createEventPins(List<facebookObject> eventList) {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            //int items=eventList.size();
-            //for (int i=0; i<items; i++){
-            //  double lat = Double.parseDouble(eventList.get(i).getLocation());
-            //double longi = Double.parseDouble(eventList.get(i).getLocation());
-            //LatLng Adr = new LatLng(lat, longi);
-            //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(eventList.get(i).eventName));
-            //markerList.add(marker);
-            //}
-        }
     }
 
     /**
