@@ -29,7 +29,7 @@ public class infoWindowAdapter implements InfoWindowAdapter {
         if (MapsActivity.buildingids.contains(marker.getId())) {
             View v = inflater.inflate(R.layout.building_window, null);
             if (marker != null) {
-                buildingObject b;
+                buildingObject b = null;
                 for(buildingObject obj:MapsActivity.filteredList){
                     if(obj.building.equals(marker.getTitle())){
                         b = obj;
