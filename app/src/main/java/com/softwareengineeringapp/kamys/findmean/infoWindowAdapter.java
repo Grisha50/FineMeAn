@@ -14,7 +14,6 @@ public class infoWindowAdapter implements InfoWindowAdapter {
     private TextView handicap;
     private TextView elevators;
     private TextView StudyArea;
-    private static int index;
     private TextView eventName;
     private TextView time;
     private TextView description;

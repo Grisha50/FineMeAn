@@ -64,8 +64,8 @@ public class FacebookEventSearch {
                                 long startTime = dateFormat.parse(start).getTime();
                                 long endTime = dateFormat.parse(start).getTime() + 3600000 * 2;
                                 if (startTime - currTime < (3600000 * TimeFrame) && endTime - currTime > 0){
-                                    System.out.println(temp.getString("id") + " was added");
-                                    System.out.println(temp);
+                                    //System.out.println(temp.getString("id") + " was added");
+                                    //System.out.println(temp);
                                     //System.out.println(temp.getString("place"));
                                     try {
                                         FacebookList.add(new facebookObject(temp.getString("name"), temp.getString("description"), temp.getString("id"), temp.getString("start_time"), temp.getJSONObject("place").getJSONObject("location").getString("longitude"), temp.getJSONObject("place").getJSONObject("location").getString("latitude")));
@@ -92,8 +92,8 @@ public class FacebookEventSearch {
                             Iterator<facebookObject> iterFace = FacebookList.iterator();
                             while (iterFace.hasNext()) {
                                 facebookObject x = iterFace.next();
-                                System.out.println("long: " + x.getLongitude());
-                                System.out.println("lat: " + x.getLatitude());
+                                //System.out.println("long: " + x.getLongitude());
+                                //System.out.println("lat: " + x.getLatitude());
 
                             }
                         } catch (JSONException e) {
@@ -114,7 +114,7 @@ public class FacebookEventSearch {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         JSONObject jobj = response.getJSONObject();
-                        System.out.println("object =" + jobj);
+                        //System.out.println("object =" + jobj);
                         //System.out.println("response =" + response);
                         JSONArray jarray = null;
                         try {
@@ -135,13 +135,13 @@ public class FacebookEventSearch {
                                 long endTime = dateFormat.parse(start).getTime() + 3600000 * 2;
 
                                 if (startTime - currTime < (3600000 * TimeFrame) && endTime - currTime > 0){
-                                    System.out.println(startTime - currTime);
-                                    System.out.println(endTime - currTime);
-                                    System.out.println("Unix timestamp: " + startTime);
+                                    //System.out.println(startTime - currTime);
+                                    //System.out.println(endTime - currTime);
+                                    //System.out.println("Unix timestamp: " + startTime);
                                 } else {
-                                    System.out.println(temp.getString("id") + " was removed");
-                                    System.out.println(startTime - currTime);
-                                    System.out.println(endTime - currTime);
+                                    //System.out.println(temp.getString("id") + " was removed");
+                                    //System.out.println(startTime - currTime);
+                                    //System.out.println(endTime - currTime);
                                     iter.remove();
                                 }
                             }
