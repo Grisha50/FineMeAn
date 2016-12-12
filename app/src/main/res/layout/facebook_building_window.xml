@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:background="#f0f3bd">
+
+    <TextView
+        android:text="Event Name"
+        android:layout_width="match_parent"
+        android:id="@+id/eventName"
+        android:layout_height="40sp"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+        android:background="#42cef4" />
+
+    <TextView
+        android:text="Start Time"
+        android:layout_width="match_parent"
+        android:id="@+id/eventTime"
+        android:layout_height="40sp"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:background="#bdf3d4"
+        android:textAlignment="center" />
+
+    <TextView
+        android:text="Description"
+        android:layout_width="match_parent"
+        android:id="@+id/Bathroom"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:background="#bdf3f0"
+        android:textAlignment="center" />
+</LinearLayout>
