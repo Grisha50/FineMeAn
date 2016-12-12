@@ -29,7 +29,7 @@
     <TextView
         android:text="Description"
         android:layout_width="match_parent"
-        android:id="@+id/Bathroom"
+        android:id="@+id/eventDescription"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="@android:color/black"
