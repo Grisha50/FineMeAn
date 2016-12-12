@@ -17,7 +17,7 @@ public class facebookInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private TextView eventAddress;
     private TextView eventTime;
     private TextView eventDate;
-
+    private static int index;
     public facebookInfoWindowAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
     }
@@ -26,13 +26,13 @@ public class facebookInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     public View getInfoWindow(Marker marker) {
         View v = inflater.inflate(R.layout.building_info_window, null);
         if (marker != null) {
-            eventName = (TextView) v.findViewById(R.id.bName);
+            eventName = (TextView) v.findViewById(R.id.info);
             eventName.setText(marker.getTitle());
-            eventTime = (TextView) v.findViewById(R.id.bList);
+            eventTime = (TextView) v.findViewById(R.id.facebookTime);
             eventTime.setText(marker.getTitle());
-            eventDate = (TextView) v.findViewById(R.id.bList);
+            eventDate = (TextView) v.findViewById(R.id.facebookDate);
             eventDate.setText(marker.getTitle());
-            eventAddress = (TextView) v.findViewById(R.id.bList);
+            eventAddress = (TextView) v.findViewById(R.id.facebookAddress);
             eventAddress.setText(marker.getTitle());
         }
         return (v);
