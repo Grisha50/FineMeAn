@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.view.View;
@@ -40,6 +41,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     buildingObject bObject;
     private SearchView searchView;
     boolean firstRun = true;
+    public static ArrayList<String> buildingids = new ArrayList<>();
+    public static HashMap<Marker, facebookObject> facebookMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .position(Adr)
                     .title(pinList.get(i).building));
             buildings.add(i, pinList.get(i));
+            buildingids.add(marker.getId());
         }
     }
 
@@ -147,6 +151,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .title(eventList.get(i).eventName)
                         .icon(BitmapDescriptorFactory
                                 .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                facebookMap.put(marker, eventList.get(i));
             }
         }
     }

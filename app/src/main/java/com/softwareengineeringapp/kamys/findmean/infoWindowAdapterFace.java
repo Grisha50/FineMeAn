@@ -28,8 +28,8 @@ public class infoWindowAdapterFace implements InfoWindowAdapter {
             eventName.setText(marker.getTitle());
             time = (TextView) v.findViewById(R.id.eventTime);
             time.setText(b.date);
-            //description = (TextView) v.findViewById(R.id.eventDescription);
-            //description.setText(b.description);
+            description = (TextView) v.findViewById(R.id.eventDescription);
+            description.setText(b.description);
             index++;
         }
         index = (index == MapsActivity.mEventList.size()-1)?0:index++;
