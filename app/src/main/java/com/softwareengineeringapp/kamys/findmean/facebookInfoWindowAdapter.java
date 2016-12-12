@@ -24,7 +24,7 @@ public class facebookInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
-        View v = inflater.inflate(R.layout.building_info_window, null);
+        View v = inflater.inflate(R.layout.facebook_building_window, null);
         if (marker != null) {
             eventName = (TextView) v.findViewById(R.id.info);
             eventName.setText(marker.getTitle());
