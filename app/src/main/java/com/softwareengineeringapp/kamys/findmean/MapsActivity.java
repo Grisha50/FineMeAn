@@ -32,13 +32,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     public static MapsActivity instance = null;
-    public static ArrayList<buildingObject> buildings;
     private Button filter;
     private Button settings;
     private Button refresh;
     public static List<facebookObject> mEventList;
-    ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
-    ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
+    private ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
+    public static ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
     buildingObject bObject;
     private SearchView searchView;
     boolean firstRun = true;
@@ -81,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
+                //mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
                 mMap.clear();
                 createPins(filteredList);
                 createEventPins(mEventList);
@@ -117,7 +116,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return false;
             }
         });
-        buildings = new ArrayList<>();
         SetPins("y", "y", "y", "y");
     }
     
@@ -128,7 +126,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             double longi = Double.parseDouble(pinList.get(i).longi);
             LatLng Adr = new LatLng(lat, longi);
             Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
-            buildings.add(i, pinList.get(i));
             buildingids.add(marker.getId());
         }
     }
@@ -270,8 +267,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public List<facebookObject> searcher(int zipcode, int time, boolean permissions) {
         FacebookEventSearch search = new FacebookEventSearch();
-        mEventList = search.eventFinder(zipcode, time, permissions);
-        return mEventList;
+        return search.eventFinder(zipcode, time, permissions);
     }
 
     /**
