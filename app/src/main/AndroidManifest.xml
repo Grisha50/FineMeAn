@@ -49,7 +49,9 @@
         <activity android:name=".SettingsWindow"
             android:theme="@style/AppTheme.CustomTheme"
             ></activity>
-
+        <activity android:name=".FilterInfoWindow"
+            android:theme="@style/AppTheme.CustomTheme"
+            ></activity>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAHr8Llv0nEcytHRB-XzFqXNC-sRIW4G7c" />
