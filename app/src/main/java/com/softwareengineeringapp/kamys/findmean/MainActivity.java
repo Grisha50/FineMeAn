@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    public void FacebookEventSearchTest() throws Exception{
+/**    public void FacebookEventSearchTest() throws Exception{
         //Testing FacebookEventSearch
         FacebookEventSearch searcher = new FacebookEventSearch();
         List<JSONObject> mEventList = searcher.eventFinder(53706, 24, false);
@@ -125,7 +125,7 @@ public class MainActivity extends Activity {
                             o.get("description") == null &&
                             o.get("place") == null);
         }
-    }
+    }**/
 
     public void prefInit()
     {

@@ -8,28 +8,33 @@ import java.sql.Time;
 
 public class facebookObject {
     String eventName ;
-    String time ;
+    String description;
+    String ID ;
     String date ;
-    String Address ;
+    String location ;
 
-    facebookObject(String Name, String time , String date , String Address){
+    facebookObject(String Name, String description, String id , String date , String location){
 
         this.eventName = Name ;
-        this.time = time ;
+        this.description = description;
+        this.ID = id ;
         this.date = date ;
-        this.Address = Address;
+        this.location = location;
     }
 
     String getEventName(){
         return  eventName ;
     }
-    String getTime(){
-        return time ;
-        }
+    String getEventDescription() {
+        return description;
+    }
+    String getID(){
+        return ID ;
+    }
     String getDate(){
         return date ;
     }
-    String getAddress(){
-        return Address ;
+    String getLocation(){
+        return location ;
     }
 }

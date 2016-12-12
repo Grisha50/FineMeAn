@@ -28,10 +28,11 @@ public class FacebookEventSearch {
 
     List<JSONObject> EventList = new ArrayList<JSONObject>();
     List<JSONObject> TempList = new ArrayList<JSONObject>();
+    List<facebookObject> FacebookList = new ArrayList<facebookObject>();
     GraphRequest PublicEventRequest;
     GraphRequest PrivateEventRequest;
 
-    public List<JSONObject> eventFinder(int zipcode, int timeframe, boolean permission) {
+    public List<facebookObject> eventFinder(int zipcode, int timeframe, boolean permission) {
         final int ZipCode = zipcode;
         final int TimeFrame = timeframe;
         final boolean Permission = permission;
@@ -63,15 +64,12 @@ public class FacebookEventSearch {
                                 long startTime = dateFormat.parse(start).getTime();
                                 long endTime = dateFormat.parse(start).getTime() + 3600000 * 2;
                                 if (startTime - currTime < (3600000 * TimeFrame) && endTime - currTime > 0){
-                                    System.out.println(startTime - currTime);
-                                    System.out.println(endTime - currTime);
                                     System.out.println("Unix timestamp: " + startTime);
+                                    System.out.println(temp.getString("place"));
+                                    FacebookList.add(new facebookObject(temp.getString("name"), temp.getString("description"), temp.getString("id"), temp.getString("start_time"), temp.getString("place")));
                                 } else {
                                     System.out.println(temp.getString("id") + " was removed");
                                     System.out.println(temp.getString("start_time"));
-                                    System.out.println(currTime);
-                                    System.out.println(startTime);
-                                    System.out.println(endTime);
                                     System.out.print("start - curr = ");
                                     System.out.println((startTime - currTime) / 3600000);
                                     System.out.print("end - curr = ");
@@ -156,6 +154,6 @@ public class FacebookEventSearch {
             PrivateEventRequest.executeAsync();
         }
 
-        return this.EventList;
+        return this.FacebookList;
     }
 }

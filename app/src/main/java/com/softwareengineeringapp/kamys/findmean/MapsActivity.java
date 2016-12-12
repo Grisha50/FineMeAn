@@ -34,7 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button filter;
     private Button settings;
     private Button refresh;
-    public List<JSONObject> mEventList;
+    public List<facebookObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
     buildingObject bObject;
@@ -49,8 +49,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        if (MainActivity.instance.getPref(getString(R.string.FACEBOOK)) == 1 ) {
-            mEventList = searcher(53706, 24, false);
+        if (AccessToken.getCurrentAccessToken() != null) {
+            mEventList = searcher(53706, 48, false);
         }
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
@@ -175,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         instance = null;
     }
 
-    public List<JSONObject> searcher(int zipcode, int time, boolean permissions) {
+    public List<facebookObject> searcher(int zipcode, int time, boolean permissions) {
         FacebookEventSearch search = new FacebookEventSearch();
         mEventList = search.eventFinder(zipcode, time, permissions);
         return mEventList;
