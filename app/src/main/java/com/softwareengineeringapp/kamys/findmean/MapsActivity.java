@@ -123,7 +123,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SetPins("y", "y", "y", "y");
     }
     
-        public void createPins(ArrayList<buildingObject> pinList){
+    public void createPins(ArrayList<buildingObject> pinList){
         int items=pinList.size();
         for (int i=0; i<items; i++){
             double lat = Double.parseDouble(pinList.get(i).lat);
@@ -131,7 +131,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng Adr = new LatLng(lat, longi);
             Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
             buildingids.add(marker.getId());
-        }
+            }
     }
 
     public void createEventPins(List<facebookObject> eventList) {

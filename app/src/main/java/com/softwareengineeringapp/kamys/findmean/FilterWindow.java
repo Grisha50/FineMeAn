@@ -1,6 +1,7 @@
 package com.softwareengineeringapp.kamys.findmean;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -15,6 +16,7 @@ public class FilterWindow extends Activity {
     public static boolean filterUpdate;
     public static String[] updatedArgs = new String[5];
     private Button filterButton;
+    private Button infoButton;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -22,11 +24,12 @@ public class FilterWindow extends Activity {
         setContentView(R.layout.filter_window);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        getWindow().setLayout((int)(dm.widthPixels*.8), (int)(dm.heightPixels*.4));
+        getWindow().setLayout((int)(dm.widthPixels*.8), (int)(dm.heightPixels*.5));
 
         filterUpdate = false;
 
         filterButton = (Button) findViewById(R.id.filterButtion2);
+        infoButton = (Button) findViewById(R.id.button5);
         final CheckBox checkBox[] = {(CheckBox) findViewById(R.id.checkBox1),
                 (CheckBox) findViewById(R.id.checkBox2),
                 (CheckBox) findViewById(R.id.checkBox3),
@@ -52,5 +55,14 @@ public class FilterWindow extends Activity {
                 finish();
             }
         });
+
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FilterWindow.this,FilterInfoWindow.class));
+            }
+        });
+
+
     }
 }
