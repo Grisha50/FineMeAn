@@ -3,6 +3,7 @@ package com.softwareengineeringapp.kamys.findmean;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -118,30 +119,48 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SetPins("y", "y", "y", "y");
     }
 
-        public void createPins(ArrayList<buildingObject> pinList){
+    public void createPins(ArrayList<buildingObject> pinList){
         int items=pinList.size();
+        Location userLoc = new Location("");
+        Location buildingLoc = new Location("");
+        //TODO: Pull actual location
+        userLoc.setLatitude(43.071486);
+        userLoc.setLongitude(-89.406630);
         for (int i=0; i<items; i++){
             double lat = Double.parseDouble(pinList.get(i).lat);
             double longi = Double.parseDouble(pinList.get(i).longi);
-            LatLng Adr = new LatLng(lat, longi);
-            Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
-            buildingids.add(marker.getId());
+            buildingLoc.setLatitude(lat);
+            buildingLoc.setLongitude(longi);
+            if(userLoc.distanceTo(buildingLoc)/1000 <= ((double)MainActivity.instance.getPref(getString(R.string.DRAWDIST)) / 4)) {
+                LatLng Adr = new LatLng(lat, longi);
+                Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
+                buildingids.add(marker.getId());
+            }
         }
     }
 
     public void createEventPins(List<facebookObject> eventList) {
+        Location userLoc = new Location("");
+        Location eventLoc = new Location("");
+        //TODO: Pull actual location
+        userLoc.setLatitude(43.071486);
+        userLoc.setLongitude(-89.406630);
         if (AccessToken.getCurrentAccessToken() != null) {
             int items = eventList.size();
             for (int i = 0; i < items; i++) {
                 double lat = Double.parseDouble(eventList.get(i).getLatitude());
                 double longi = Double.parseDouble(eventList.get(i).getLongitude());
-                LatLng Adr = new LatLng(lat, longi);
-                Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(Adr)
-                        .title(eventList.get(i).eventName)
-                        .icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                facebookMap.put(marker, eventList.get(i));
+                eventLoc.setLatitude(lat);
+                eventLoc.setLongitude(longi);
+                if(userLoc.distanceTo(eventLoc)/1000 <= ((double)MainActivity.instance.getPref(getString(R.string.DRAWDIST)) / 4)) {
+                    LatLng Adr = new LatLng(lat, longi);
+                    Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(Adr)
+                            .title(eventList.get(i).eventName)
+                            .icon(BitmapDescriptorFactory
+                                    .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                    facebookMap.put(marker, eventList.get(i));
+                }
             }
         }
     }
