@@ -200,14 +200,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void createEventPins(List<facebookObject> eventList) {
         if (AccessToken.getCurrentAccessToken() != null) {
-            //int items=eventList.size();
-            //for (int i=0; i<items; i++){
-            //  double lat = Double.parseDouble(eventList.get(i).getLocation());
-            //double longi = Double.parseDouble(eventList.get(i).getLocation());
-            //LatLng Adr = new LatLng(lat, longi);
-            //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(eventList.get(i).eventName));
-            //markerList.add(marker);
-            //}
+            int items=eventList.size();
+            for (int i=0; i<items; i++){
+                double lat = Double.parseDouble(eventList.get(i).getLongitude());
+                double longi = Double.parseDouble(eventList.get(i).getLatitude());
+                LatLng Adr = new LatLng(lat, longi);
+                Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(eventList.get(i).eventName));
+            }
         }
     }
 
