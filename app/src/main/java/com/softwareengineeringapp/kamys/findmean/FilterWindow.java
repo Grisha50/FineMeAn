@@ -24,8 +24,6 @@ public class FilterWindow extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         getWindow().setLayout((int)(dm.widthPixels*.8), (int)(dm.heightPixels*.4));
 
-        MainActivity.instance.editPref("FilterUpdateKey", 0);
-
         filterButton = (Button) findViewById(R.id.filterButtion2);
         final CheckBox checkBox[] = {(CheckBox) findViewById(R.id.checkBox1),
                 (CheckBox) findViewById(R.id.checkBox2),
@@ -53,12 +51,7 @@ public class FilterWindow extends Activity {
                     updatedArgs[i] = checkBox[i].isChecked()?"y":"x";
                     i++;
                 }
-<<<<<<< HEAD
-                filterUpdate = true;
                 setResult(1);
-=======
-                MainActivity.instance.editPref("FilterUpdateKey", 1);
->>>>>>> origin/Database
                 finish();
             }
         });
