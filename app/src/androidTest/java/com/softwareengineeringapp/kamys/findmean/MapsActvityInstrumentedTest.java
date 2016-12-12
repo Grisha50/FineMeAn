@@ -42,7 +42,7 @@ public class MapsActvityInstrumentedTest {
     public void buildingSetup(){
         mList = new ArrayList<buildingObject>();
         //mList.add(new buildingObject(true, true, -89.4067, 43.0755, true, true, "Van Hise"));
-        MapsActivity.buildings = mList;
+        MapsActivity.filteredList = mList;
     }
 
     @Test
