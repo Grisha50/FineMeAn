@@ -53,9 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        if (AccessToken.getCurrentAccessToken() != null) {
-            mEventList = searcher(53706, 100, false);
-        }
+
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
         refresh = (Button) findViewById(R.id.button4);
@@ -85,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
                 mMap.clear();
                 createPins(filteredList);
-                createEventPins(mEventList);
+                searcher(53706, 100, false);
             }
         });
         searchView = (SearchView) findViewById(R.id.searchbar);
@@ -95,7 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                  String comparison = query.toLowerCase();
+                String comparison = query.toLowerCase();
                 String building ;
                 boolean found = false ;
                  for( buildingObject  b : mainList){
@@ -297,7 +295,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
         createPins(mainList);
         filteredList = mainList;
-        createEventPins(mEventList);
+        if (AccessToken.getCurrentAccessToken() != null) {
+            searcher(53706, 100, false);
+        }
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
 
         //LatLng Adr = new LatLng(43.070500, -89.398364);
