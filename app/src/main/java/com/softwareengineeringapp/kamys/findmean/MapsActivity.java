@@ -88,21 +88,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String comparison = query.toLowerCase();
-                String building ;
-                boolean found = false ;
-                 for( buildingObject  b : mainList){
-                     building = b.BuildingName().toLowerCase();
+                String comparison = query.toLowerCase().trim();
+                String building;
+                //boolean found = false;
+                 for(buildingObject  b : mainList){
+                     building = b.BuildingName().toLowerCase().trim();
+                     Log.d(comparison, building);
                      if(building.equals(comparison)){
-                         LatLng Cord = new LatLng(b.latitude(),b.longitude()) ;
-                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Cord,17));
-                         found = true ;
+                         LatLng Coord = new LatLng(b.latitude(),b.longitude()) ;
+                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Coord,17));
+                         mMap.addMarker(new MarkerOptions()
+                                 .title(b.building)
+                                 .position(Coord));
+                         return true;
                      }
 
                  }
-                if( found == false){
-                    Toast.makeText(getBaseContext(),"Building Not Found", Toast.LENGTH_LONG);
-                }
+                //if( found == false){
+                    //Toast.makeText(getBaseContext(),"Building Not Found", Toast.LENGTH_LONG);
+                //}
                 return false;
             }
 
@@ -150,7 +154,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mainList.clear();
         Cursor cur = null;
 
-        if (firstRun == true)
+        if (firstRun)
         {
             cur = db.rawQuery("SELECT * FROM Amenities", null);
         }
@@ -206,7 +210,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 args = new String[args.length+1];
                 int i = 0;
                 for(String s:tmp){
-                    args[i] = tmp[i];
+                    args[i] = s;
                     i++;
                 }
                 args[i] = studyArea;
@@ -222,7 +226,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (cur.moveToFirst())
         {
-            while (cur.isAfterLast() == false)
+            while (!cur.isAfterLast())
             {
                 String name = cur.getString(cur.getColumnIndex("BuildingName"));
                 String hand = cur.getString(cur.getColumnIndex("Hand"));
@@ -235,7 +239,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 bObject = new buildingObject(name, hand, bath, elev, study, lat, longi, link);
 
-                if (firstRun == true)
+                if (firstRun)
                 {
                     mainList.add(bObject);
                 }
@@ -248,6 +252,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         cur.close();
+        db.close();
         firstRun = false;
     }
 
@@ -295,7 +300,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
         if (requestCode == 1 && resultCode == 1) {
             String arg[] = FilterWindow.updatedArgs;
-            Log.d("FILTER", "onClick: " + arg[0] + arg[1] + arg[2] + arg[3]);
+            //Log.d("FILTER", "onClick: " + arg[0] + arg[1] + arg[2] + arg[3]);
             SetPins(arg[0], arg[1], arg[2], arg[3]);
             mMap.clear();
             createPins(filteredList);
