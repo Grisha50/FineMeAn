@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by Andy Ni on 12/8/2016.
  */
