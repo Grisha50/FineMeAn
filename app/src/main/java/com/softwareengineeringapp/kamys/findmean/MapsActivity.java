@@ -173,6 +173,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return mEventList;
     }
 
+    public void createEventPins(List<JSONObject> eventList) {
+        int items=eventList.size();
+        for (int i=0; i<items; i++){
+            //double lat = Double.parseDouble(pinList.get(i).lat);
+            //double longi = Double.parseDouble(pinList.get(i).longi);
+            //LatLng Adr = new LatLng(lat, longi);
+            //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
+        }
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -197,6 +207,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //LatLng Adr = new LatLng(43.070500, -89.398364);
         //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
         createPins(mainList);
+        createEventPins(mEventList);
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
 
         //LatLng Adr = new LatLng(43.070500, -89.398364);
