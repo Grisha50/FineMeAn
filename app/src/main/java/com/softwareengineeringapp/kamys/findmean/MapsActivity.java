@@ -61,24 +61,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-<<<<<<< HEAD
-                Intent act = new Intent(MapsActivity.this, FilterWindow.class);
-
-                startActivityForResult(act, 1);
-=======
-                startActivity(new Intent(MapsActivity.this,FilterWindow.class));
-                if(MainActivity.instance.getPref("FilterUpdateKey") == 1){
-                    String arg[] = FilterWindow.updatedArgs;
-                    SetPins(arg[0], arg[1], arg[2], arg[3]);
-                    //try{wait(10000);}catch(Exception e){}
-                    mMap.clear();
-                    createPins(filteredList);
-                    if (AccessToken.getCurrentAccessToken() != null) {
-                        searcher(53706, 100, false);
-                    }
+                startActivityForResult(new Intent(MapsActivity.this, FilterWindow.class), 1);
                 }
->>>>>>> origin/Database
-            }
         });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +77,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 createPins(filteredList);
                 if (AccessToken.getCurrentAccessToken() != null) {
                     searcher(53706, 100, false);
-                    //searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
                 }
             }
         });
@@ -300,18 +283,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
 
-        //Dummy Marker for testing
-        //LatLng Adr = new LatLng(43.070500, -89.398364);
-        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
         createPins(mainList);
         filteredList = mainList;
         if (AccessToken.getCurrentAccessToken() != null) {
             searcher(53706, 100, false);
         }
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
-
-        //LatLng Adr = new LatLng(43.070500, -89.398364);
-        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
     }
 
     @Override
@@ -322,7 +299,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             SetPins(arg[0], arg[1], arg[2], arg[3]);
             mMap.clear();
             createPins(filteredList);
-            createEventPins(mEventList);
+            if (AccessToken.getCurrentAccessToken() != null && arg[4].equals("y")) {
+                searcher(53706, 100, false);
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
