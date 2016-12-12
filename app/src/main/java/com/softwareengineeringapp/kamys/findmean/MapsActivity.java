@@ -33,18 +33,17 @@ import static android.R.attr.data;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
     public static MapsActivity instance = null;
+    public static ArrayList<String> buildingids = new ArrayList<>();
+    public static HashMap<Marker, facebookObject> facebookMap = new HashMap<>();
+    private static boolean firstRun = true;
+    public static ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
+    private GoogleMap mMap;
     private Button filter;
     private Button settings;
     private Button refresh;
     private ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
-    public static ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
-    private buildingObject bObject;
     private SearchView searchView;
-    boolean firstRun = true;
-    public static ArrayList<String> buildingids = new ArrayList<>();
-    public static HashMap<Marker, facebookObject> facebookMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(MapsActivity.this, FilterWindow.class), 1);
-                }
+            }
         });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,21 +91,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String comparison = query.toLowerCase().trim();
                 String building;
                 //boolean found = false;
-                 for(buildingObject  b : mainList){
-                     building = b.BuildingName().toLowerCase().trim();
-                     Log.d(comparison, building);
-                     if(building.equals(comparison)){
-                         LatLng Coord = new LatLng(b.latitude(),b.longitude()) ;
-                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Coord,17));
-                         mMap.addMarker(new MarkerOptions()
-                                 .title(b.building)
-                                 .position(Coord));
-                         return true;
-                     }
+                for(buildingObject  b : mainList){
+                    building = b.BuildingName().toLowerCase().trim();
+                    Log.d(comparison, building);
+                    if(building.equals(comparison)){
+                        LatLng Coord = new LatLng(b.latitude(),b.longitude()) ;
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Coord,17));
+                        mMap.addMarker(new MarkerOptions()
+                                .title(b.building)
+                                .position(Coord));
+                        return true;
+                    }
 
-                 }
+                }
                 //if( found == false){
-                    //Toast.makeText(getBaseContext(),"Building Not Found", Toast.LENGTH_LONG);
+                //Toast.makeText(getBaseContext(),"Building Not Found", Toast.LENGTH_LONG);
                 //}
                 return false;
             }
@@ -116,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return false;
             }
         });
-        SetPins("y", "y", "y", "y");
+        SetPins("x", "x", "x", "x");
     }
 
     public void createPins(ArrayList<buildingObject> pinList){
@@ -170,16 +169,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         DataBaseHelper myDb = new DataBaseHelper(this);
         SQLiteDatabase db = myDb.getReadableDatabase();
-        mainList.clear();
+        filteredList.clear();
         Cursor cur = null;
 
         if (firstRun)
         {
             cur = db.rawQuery("SELECT * FROM Amenities", null);
-        }
-
-        else
-        {
+            Log.d("FIRST RUN", "TRUE!");
+        }else{
             String []args = new String[0];
             String query = "SELECT * FROM Amenities WHERE ";
             if(restroom.equals("x")){
@@ -256,11 +253,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String longi = cur.getString(cur.getColumnIndex("Long"));
                 String link = cur.getString(cur.getColumnIndex("Link"));
 
-                bObject = new buildingObject(name, hand, bath, elev, study, lat, longi, link);
+                buildingObject bObject = new buildingObject(name, hand, bath, elev, study, lat, longi, link);
 
                 if (firstRun)
                 {
                     mainList.add(bObject);
+                    Log.d("FIRST RUN", bObject.building);
                 }
                 else
                 {
@@ -308,7 +306,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(zoom);
 
         createPins(mainList);
-        filteredList = mainList;
+        filteredList.clear();
+        filteredList.addAll(mainList);
         if (AccessToken.getCurrentAccessToken() != null) {
             searcher(53706, 100, false);
         }
