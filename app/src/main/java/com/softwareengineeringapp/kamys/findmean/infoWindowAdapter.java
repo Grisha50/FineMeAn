@@ -47,8 +47,12 @@ public class infoWindowAdapter implements InfoWindowAdapter {
                 elevators = (TextView) v.findViewById(R.id.Elevators);
                 elevators.setText(b.elevator.equals("y") ? "Elevators are available." : "Elevators are not available.");
                 StudyArea = (TextView) v.findViewById(R.id.studyarea);
-                StudyArea.setText(b.study.equals("y") ? "There is a (possibly unofficial) study area" +
-                        " available on the main floor." : "No study areas available.");
+                if(b.study == null){
+                    StudyArea.setText("No study areas available.");
+                }else {
+                    StudyArea.setText(b.study.equals("y") ? "There is a (possibly unofficial) study area" +
+                            " available on the main floor." : "No study areas available.");
+                }
             }
             return (v);
         } else {

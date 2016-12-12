@@ -66,8 +66,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(FilterWindow.filterUpdate){
                     String arg[] = FilterWindow.updatedArgs;
                     SetPins(arg[0], arg[1], arg[2], arg[3]);
-                    try{wait(10000);}catch(Exception e){}
-                    refresh.performClick();
+                    //try{wait(10000);}catch(Exception e){}
+                    mMap.clear();
+                    createPins(filteredList);
+                    createEventPins(mEventList);
                 }
             }
         });
@@ -294,6 +296,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //LatLng Adr = new LatLng(43.070500, -89.398364);
         //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
         createPins(mainList);
+        filteredList = mainList;
         createEventPins(mEventList);
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
 
