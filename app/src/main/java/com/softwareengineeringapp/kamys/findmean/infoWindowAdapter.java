@@ -7,11 +7,6 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
-import static com.softwareengineeringapp.kamys.findmean.MapsActivity.buildingids;
-import static com.softwareengineeringapp.kamys.findmean.MapsActivity.buildings;
-import static com.softwareengineeringapp.kamys.findmean.MapsActivity.facebookMap;
-import static com.softwareengineeringapp.kamys.findmean.MapsActivity.filteredList;
-
 public class infoWindowAdapter implements InfoWindowAdapter {
     LayoutInflater inflater = null;
     private TextView buildingName;
@@ -31,11 +26,11 @@ public class infoWindowAdapter implements InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
-        if (buildingids.contains(marker.getId())) {
+        if (MapsActivity.buildingids.contains(marker.getId())) {
             View v = inflater.inflate(R.layout.building_window, null);
             if (marker != null) {
                 buildingObject b;
-                for(buildingObject obj:filteredList){
+                for(buildingObject obj:MapsActivity.filteredList){
                     if(obj.building.equals(marker.getTitle())){
                         b = obj;
                         break;
@@ -60,11 +55,11 @@ public class infoWindowAdapter implements InfoWindowAdapter {
             View v = inflater.inflate(R.layout.facebook_building_window, null);
             if (marker != null) {
                 eventName = (TextView) v.findViewById(R.id.eventName);
-                eventName.setText(facebookMap.get(marker).eventName);
+                eventName.setText(MapsActivity.facebookMap.get(marker).eventName);
                 time = (TextView) v.findViewById(R.id.eventTime);
-                time.setText(facebookMap.get(marker).date);
+                time.setText(MapsActivity.facebookMap.get(marker).date);
                 description = (TextView) v.findViewById(R.id.eventDescription);
-                description.setText(facebookMap.get(marker).description);
+                description.setText(MapsActivity.facebookMap.get(marker).description);
             }
             return (v);
         }
