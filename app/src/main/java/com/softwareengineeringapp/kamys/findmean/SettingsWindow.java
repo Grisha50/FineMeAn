@@ -90,7 +90,7 @@ public class SettingsWindow extends Activity {
     public void seekBarTime() {
         seek_bar = (SeekBar) findViewById(R.id.seekBar2);
         textView2 = (TextView) findViewById(R.id.textView3);
-        seek_bar.setMax(24);
+        seek_bar.setMax(48);
         seek_bar.setProgress(MainActivity.instance.getPref(getString(R.string.TIME)));
         textView2.setText("Within " + seek_bar.getProgress() + " hours from now");
         seek_bar.setOnSeekBarChangeListener(

@@ -28,10 +28,11 @@ public class FacebookEventSearch {
 
     List<JSONObject> EventList = new ArrayList<JSONObject>();
     List<JSONObject> TempList = new ArrayList<JSONObject>();
+    List<facebookObject> FacebookList = new ArrayList<facebookObject>();
     GraphRequest PublicEventRequest;
     GraphRequest PrivateEventRequest;
 
-    public List<JSONObject> eventFinder(int zipcode, int timeframe, boolean permission) {
+    public List<facebookObject> eventFinder(int zipcode, int timeframe, boolean permission) {
         final int ZipCode = zipcode;
         final int TimeFrame = timeframe;
         final boolean Permission = permission;
@@ -59,19 +60,24 @@ public class FacebookEventSearch {
                             while (iter.hasNext()) {
                                 temp = iter.next();
                                 String start = temp.getString("start_time");
-                                String end = temp.getString("end_time");
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
                                 long startTime = dateFormat.parse(start).getTime();
-                                long endTime = dateFormat.parse(end).getTime();
-                                if (startTime - currTime < (3600 * TimeFrame) && endTime - currTime > 0){
-                                    System.out.println(startTime - currTime);
-                                    System.out.println(endTime - currTime);
+                                long endTime = dateFormat.parse(start).getTime() + 3600000 * 2;
+                                if (startTime - currTime < (3600000 * TimeFrame) && endTime - currTime > 0){
                                     System.out.println("Unix timestamp: " + startTime);
+                                    System.out.println(temp.getString("place"));
+                                    FacebookList.add(new facebookObject(temp.getString("name"), temp.getString("description"), temp.getString("id"), temp.getString("start_time"), temp.getString("place")));
                                 } else {
                                     System.out.println(temp.getString("id") + " was removed");
+                                    System.out.println(temp.getString("start_time"));
+                                    System.out.print("start - curr = ");
+                                    System.out.println((startTime - currTime) / 3600000);
+                                    System.out.print("end - curr = ");
+                                    System.out.println((endTime - currTime) / 3600000);
                                     iter.remove();
                                 }
                             }
+                            System.out.println(EventList);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e) {
@@ -105,17 +111,19 @@ public class FacebookEventSearch {
                             while (iter.hasNext()) {
                                 temp = iter.next();
                                 String start = temp.getString("start_time");
-                                String end = temp.getString("end_time");
                                 SimpleDateFormat dateFormat =
                                         new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
                                 long startTime = dateFormat.parse(start).getTime();
-                                long endTime = dateFormat.parse(end).getTime();
-                                if (startTime - currTime < (3600 * TimeFrame) && endTime - currTime > 0){
-                                    //System.out.println(startTime - currTime);
-                                    //System.out.println(endTime - currTime);
+                                long endTime = dateFormat.parse(start).getTime() + 3600000 * 2;
+
+                                if (startTime - currTime < (3600000 * TimeFrame) && endTime - currTime > 0){
+                                    System.out.println(startTime - currTime);
+                                    System.out.println(endTime - currTime);
                                     System.out.println("Unix timestamp: " + startTime);
                                 } else {
                                     System.out.println(temp.getString("id") + " was removed");
+                                    System.out.println(startTime - currTime);
+                                    System.out.println(endTime - currTime);
                                     iter.remove();
                                 }
                             }
@@ -134,7 +142,7 @@ public class FacebookEventSearch {
         Bundle parameters = new Bundle();
         parameters.putString("q", "madison, wi");
         parameters.putString("type", "event");
-        parameters.putString("fields", "id, name, description, place, start_time, end_time");
+        parameters.putString("fields", "id, name, description, place, start_time");
         parameters.putString("limit", "100");
         System.out.println(parameters);
         PublicEventRequest.setParameters(parameters);
@@ -146,6 +154,6 @@ public class FacebookEventSearch {
             PrivateEventRequest.executeAsync();
         }
 
-        return this.EventList;
+        return this.FacebookList;
     }
 }
