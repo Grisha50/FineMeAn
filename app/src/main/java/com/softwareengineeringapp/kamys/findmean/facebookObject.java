@@ -42,4 +42,5 @@ public class facebookObject {
     String getLatitude(){
         return latitude;
     }
+
 }
