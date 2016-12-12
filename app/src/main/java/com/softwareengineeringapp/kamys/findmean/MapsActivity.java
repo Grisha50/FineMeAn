@@ -2,7 +2,6 @@ package com.softwareengineeringapp.kamys.findmean;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,16 +9,13 @@ import android.os.Bundle;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -27,15 +23,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONObject;
-
-import static android.R.attr.id;
-import static android.R.id.list;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback  {
 
@@ -47,15 +36,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button refresh;
     public List<JSONObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
+    ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
     buildingObject bObject;
     private SearchView searchView;
+    boolean firstRun = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
         setContentView(R.layout.activity_maps_final);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -131,12 +121,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         DataBaseHelper myDb = new DataBaseHelper(this);
         SQLiteDatabase db = myDb.getReadableDatabase();
         mainList.clear();
+        Cursor cur;
 
-        Cursor cur = db.rawQuery("SELECT * FROM Amenities " +
-                "WHERE Bathrooms = ? " +
-                "AND Elevators = ? " +
-                "AND Hand = ? " +
-                "AND StudyArea = ?", new String[]{restroom, elevator, handicap, studyArea});
+        if (firstRun == true)
+        {
+            cur = db.rawQuery("SELECT * FROM Amenities", null);
+        }
+
+        else
+        {
+            cur = db.rawQuery("SELECT * FROM Amenities " +
+                    "WHERE Bathrooms = ? " +
+                    "AND Elevators = ? " +
+                    "AND Hand = ? " +
+                    "AND StudyArea = ?", new String[]{restroom, elevator, handicap, studyArea});
+        }
 
         if (cur.moveToFirst())
         {
@@ -152,12 +151,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String link = cur.getString(cur.getColumnIndex("Link"));
 
                 bObject = new buildingObject(name, hand, bath, elev, study, lat, longi, link);
-                mainList.add(bObject);
+
+                if (firstRun == true)
+                {
+                    mainList.add(bObject);
+                }
+                else
+                {
+                    filteredList.add(bObject);
+                }
 
                 cur.moveToNext();
             }
         }
         cur.close();
+        firstRun = false;
     }
 
 
@@ -193,13 +201,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
 
-        //Dummy Marker for testing
-        //LatLng Adr = new LatLng(43.070500, -89.398364);
-        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
         createPins(mainList);
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
 
-        //LatLng Adr = new LatLng(43.070500, -89.398364);
-        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
     }
 }
+
