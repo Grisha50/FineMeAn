@@ -45,6 +45,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
+
+
+
         setContentView(R.layout.activity_maps_final);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -69,10 +72,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEventList = searcher(53706, 100, false);
+
                 mMap.clear();
-                createPins(mainList);
-                createEventPins(mEventList);
+                //createPins(mainList);
+                searcher(53706, 100, false);
             }
         });
         searchView = (SearchView) findViewById(R.id.searchbar);
@@ -109,7 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SetPins("y", "y", "y", "y");
     }
     
-        public void createPins(ArrayList<buildingObject> pinList){
+    public void createPins(ArrayList<buildingObject> pinList){
         int items=pinList.size();
         for (int i=0; i<items; i++){
             double lat = Double.parseDouble(pinList.get(i).lat);
@@ -122,6 +125,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    public void createEventPins(List<facebookObject> eventList) {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            int items = eventList.size();
+            System.out.println("item size:" + items);
+            for (int i = 0; i < items; i++) {
+                System.out.println("I've been here");
+                double lat = Double.parseDouble(eventList.get(i).getLatitude());
+                double longi = Double.parseDouble(eventList.get(i).getLongitude());
+                LatLng Adr = new LatLng(lat, longi);
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(Adr)
+                        .title(eventList.get(i).eventName)
+                        .icon(BitmapDescriptorFactory
+                                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            }
+        }
+    }
 
     public void SetPins(String restroom, String elevator, String handicap, String studyArea)
     {
@@ -239,27 +259,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         instance = null;
     }
 
-    public List<facebookObject> searcher(int zipcode, int time, boolean permissions) {
+    void searcher(int zipcode, int time, boolean permissions) {
         FacebookEventSearch search = new FacebookEventSearch();
         mEventList = search.eventFinder(zipcode, time, permissions);
-        return mEventList;
     }
 
-    public void createEventPins(List<facebookObject> eventList) {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            int items=eventList.size();
-            for (int i=0; i<items; i++){
-                double lat = Double.parseDouble(eventList.get(i).getLatitude());
-                double longi = Double.parseDouble(eventList.get(i).getLongitude());
-                LatLng Adr = new LatLng(lat, longi);
-                Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(Adr)
-                        .title(eventList.get(i).eventName)
-                        .icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-            }
-        }
-    }
+
 
     /**
      * Manipulates the map once available.
@@ -272,9 +277,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            mEventList = searcher(53706, 100, false);
-        }
+
+
         mMap = googleMap;
         CameraUpdate center=
                 CameraUpdateFactory.newLatLng(new LatLng(43.070500,
@@ -287,8 +291,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Dummy Marker for testing
         //LatLng Adr = new LatLng(43.070500, -89.398364);
         //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
-        createPins(mainList);
-        createEventPins(mEventList);
+        //createPins(mainList);
+        if (AccessToken.getCurrentAccessToken() != null) {
+            searcher(53706, 100, false);
+        }
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
 
         //LatLng Adr = new LatLng(43.070500, -89.398364);

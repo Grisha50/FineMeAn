@@ -101,8 +101,8 @@ public class FacebookEventSearch {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }catch (NullPointerException e){
-
                         }
+                        MapsActivity.instance.createEventPins(FacebookList);
                     }
                 });
 
