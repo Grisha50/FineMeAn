@@ -28,6 +28,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 
+import static android.R.attr.data;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -35,10 +37,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button filter;
     private Button settings;
     private Button refresh;
-    public static List<facebookObject> mEventList;
     private ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     public static ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
-    buildingObject bObject;
+    private buildingObject bObject;
     private SearchView searchView;
     boolean firstRun = true;
     public static ArrayList<String> buildingids = new ArrayList<>();
@@ -60,18 +61,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MapsActivity.this,FilterWindow.class));
-                if(FilterWindow.filterUpdate){
-                    String arg[] = FilterWindow.updatedArgs;
-                    SetPins(arg[0], arg[1], arg[2], arg[3]);
-                    //try{wait(10000);}catch(Exception e){}
-                    mMap.clear();
-                    createPins(filteredList);
-                    if (AccessToken.getCurrentAccessToken() != null) {
-                        searcher(53706, 100, false);
-                    }
+                startActivityForResult(new Intent(MapsActivity.this, FilterWindow.class), 1);
                 }
-            }
         });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +73,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
                 mMap.clear();
                 createPins(filteredList);
                 if (AccessToken.getCurrentAccessToken() != null) {
@@ -90,6 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+
         searchView = (SearchView) findViewById(R.id.searchbar);
         searchView.setQueryHint("Search View");
 
@@ -102,7 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 boolean found = false ;
                  for( buildingObject  b : mainList){
                      building = b.BuildingName().toLowerCase();
-                     if(building == comparison){
+                     if(building.equals(comparison)){
                          LatLng Cord = new LatLng(b.latitude(),b.longitude()) ;
                          mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Cord,17));
                          found = true ;
@@ -122,8 +113,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         SetPins("y", "y", "y", "y");
     }
-    
-    public void createPins(ArrayList<buildingObject> pinList){
+
+        public void createPins(ArrayList<buildingObject> pinList){
         int items=pinList.size();
         for (int i=0; i<items; i++){
             double lat = Double.parseDouble(pinList.get(i).lat);
@@ -131,15 +122,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng Adr = new LatLng(lat, longi);
             Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
             buildingids.add(marker.getId());
-            }
+        }
     }
 
     public void createEventPins(List<facebookObject> eventList) {
         if (AccessToken.getCurrentAccessToken() != null) {
             int items = eventList.size();
-            System.out.println("item size:" + items);
             for (int i = 0; i < items; i++) {
-                System.out.println("I've been here");
                 double lat = Double.parseDouble(eventList.get(i).getLatitude());
                 double longi = Double.parseDouble(eventList.get(i).getLongitude());
                 LatLng Adr = new LatLng(lat, longi);
@@ -294,17 +283,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
 
-        //Dummy Marker for testing
-        //LatLng Adr = new LatLng(43.070500, -89.398364);
-        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
         createPins(mainList);
         filteredList = mainList;
         if (AccessToken.getCurrentAccessToken() != null) {
             searcher(53706, 100, false);
         }
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
+    }
 
-        //LatLng Adr = new LatLng(43.070500, -89.398364);
-        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
+    @Override
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+        if (requestCode == 1 && resultCode == 1) {
+            String arg[] = FilterWindow.updatedArgs;
+            Log.d("FILTER", "onClick: " + arg[0] + arg[1] + arg[2] + arg[3]);
+            SetPins(arg[0], arg[1], arg[2], arg[3]);
+            mMap.clear();
+            createPins(filteredList);
+            if (AccessToken.getCurrentAccessToken() != null && arg[4].equals("y")) {
+                searcher(53706, 100, false);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
