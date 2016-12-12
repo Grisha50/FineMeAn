@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.facebook.AccessToken;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -45,7 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button filter;
     private Button settings;
     private Button refresh;
-    public List<JSONObject> mEventList;
+    public List<facebookObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     buildingObject bObject;
     private SearchView searchView;
@@ -59,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        if (MainActivity.instance.getPref(getString(R.string.FACEBOOK)) == 1 ) {
+        if (AccessToken.getCurrentAccessToken() != null) {
             mEventList = searcher(53706, 24, false);
         }
         filter = (Button) findViewById(R.id.button2);
@@ -167,13 +168,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         instance = null;
     }
 
-    public List<JSONObject> searcher(int zipcode, int time, boolean permissions) {
+    public List<facebookObject> searcher(int zipcode, int time, boolean permissions) {
         FacebookEventSearch search = new FacebookEventSearch();
         mEventList = search.eventFinder(zipcode, time, permissions);
         return mEventList;
     }
 
-    public void createEventPins(List<JSONObject> eventList) {
+    public void createEventPins(List<facebookObject> eventList) {
         int items=eventList.size();
         for (int i=0; i<items; i++){
             //double lat = Double.parseDouble(pinList.get(i).lat);
