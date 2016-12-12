@@ -2,7 +2,6 @@ package com.softwareengineeringapp.kamys.findmean;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,41 +9,33 @@ import android.os.Bundle;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONObject;
 
-import static android.R.attr.id;
-import static android.R.id.list;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback  {
 
     private GoogleMap mMap;
     public static MapsActivity instance = null;
     public static ArrayList<buildingObject> buildings;
+    public static ArrayList<facebookObject> fbObjects;
     private Button filter;
     private Button settings;
     private Button refresh;
-    public List<JSONObject> mEventList;
+    private List<JSONObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     buildingObject bObject;
     private SearchView searchView;
@@ -97,7 +88,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return false;
             }
         });
-        SetPins("y", "y", "y", "y");
+        SetPins("y", "x", "x", "n");
+        buildings = new ArrayList<>();
+        fbObjects = new ArrayList<>();
     }
     
         public void createPins(ArrayList<buildingObject> pinList){
@@ -107,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             double longi = Double.parseDouble(pinList.get(i).longi);
             LatLng Adr = new LatLng(lat, longi);
             Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
+            buildings.add(i, pinList.get(i));
         }
     }
 
@@ -115,12 +109,66 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         DataBaseHelper myDb = new DataBaseHelper(this);
         SQLiteDatabase db = myDb.getReadableDatabase();
         mainList.clear();
-
-        Cursor cur = db.rawQuery("SELECT * FROM Amenities " +
-                "WHERE Bathrooms = ? " +
-                "AND Elevators = ? " +
-                "AND Hand = ? " +
-                "AND StudyArea = ?", new String[]{restroom, elevator, handicap, studyArea});
+        String []args = new String[0];
+        String query = "SELECT * FROM Amenities WHERE ";
+        if(restroom.equals("x")){
+            //query += "Bathrooms = * AND ";
+        }else{
+            query += "Bathrooms = ? AND ";
+            String []tmp = args;
+            args = new String[args.length+1];
+            int i = 0;
+            for(String s:tmp){
+                args[i] = tmp[i];
+                i++;
+            }
+            args[i] = restroom;
+        }
+        if(elevator.equals("x")){
+            //query += "Elevators = * AND ";
+        }else{
+            query += "Elevators = ? AND ";
+            String []tmp = args;
+            args = new String[args.length+1];
+            int i = 0;
+            for(String s:tmp){
+                args[i] = tmp[i];
+                i++;
+            }
+            args[i] = restroom;
+        }
+        if(handicap.equals("x")){
+            //query += "Hand = * AND ";
+        }else{
+            query += "Hand = ? AND ";
+            String []tmp = args;
+            args = new String[args.length+1];
+            int i = 0;
+            for(String s:tmp){
+                args[i] = tmp[i];
+                i++;
+            }
+            args[i] = restroom;
+        }
+        if(studyArea.equals("x")){
+            //query += "StudyArea = * ";
+        }else{
+            query += "StudyArea = ? ";
+            String []tmp = args;
+            args = new String[args.length+1];
+            int i = 0;
+            for(String s:tmp){
+                args[i] = tmp[i];
+                i++;
+            }
+            args[i] = restroom;
+        }
+        Cursor cur = null;
+        if(restroom.equals("x") && elevator.equals("x") && handicap.equals("x") && studyArea.equals("x")) {
+            cur = db.rawQuery("SELECT * FROM Amenities", args);
+        }else{
+            cur = db.rawQuery(query, args);
+        }
 
         if (cur.moveToFirst())
         {
@@ -178,13 +226,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(zoom);
 
         //Dummy Marker for testing
-        //LatLng Adr = new LatLng(43.070500, -89.398364);
-        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
         createPins(mainList);
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
-
-        //LatLng Adr = new LatLng(43.070500, -89.398364);
-        //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title("Van Hise"));
     }
 }
 

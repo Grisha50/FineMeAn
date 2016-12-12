@@ -30,7 +30,7 @@ public class infoWindowAdapter implements InfoWindowAdapter {
             buildingName = (TextView) v.findViewById(R.id.bname);
             buildingName.setText(marker.getTitle());
             bathroom = (TextView) v.findViewById(R.id.Bathroom);
-            bathroom.setText(b.bathroom.equals("y")?"Bathrooms: 1st floor":"Funny thing, no bathrooms here!");
+            bathroom.setText(b.bathroom.equals("y")?"Bathrooms: Open to the public and accessible.":"Funny thing, no bathrooms here!");
             handicap = (TextView) v.findViewById(R.id.Ramps);
             handicap.setText(b.handiCap.equals("y")?marker.getTitle() + " is accessible from the ground floor, with a ramp where necessary":
                     "This building is not easily accessible for people with limited mobility or wheelchairs");

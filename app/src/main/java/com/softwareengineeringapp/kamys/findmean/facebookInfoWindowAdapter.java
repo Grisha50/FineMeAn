@@ -17,7 +17,7 @@ public class facebookInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private TextView eventAddress;
     private TextView eventTime;
     private TextView eventDate;
-    private static int index;
+
     public facebookInfoWindowAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
     }
