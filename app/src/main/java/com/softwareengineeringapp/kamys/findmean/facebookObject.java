@@ -11,15 +11,17 @@ public class facebookObject {
     String description;
     String ID ;
     String date ;
-    String location ;
+    String longitude;
+    String latitude;
 
-    facebookObject(String Name, String description, String id , String date , String location){
+    facebookObject(String Name, String description, String id , String date , String longitude, String latitude){
 
         this.eventName = Name ;
         this.description = description;
         this.ID = id ;
         this.date = date ;
-        this.location = location;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     String getEventName(){
@@ -34,7 +36,10 @@ public class facebookObject {
     String getDate(){
         return date ;
     }
-    String getLocation(){
-        return location ;
+    String getLongitude(){
+        return longitude;
+    }
+    String getLatitude(){
+        return latitude;
     }
 }

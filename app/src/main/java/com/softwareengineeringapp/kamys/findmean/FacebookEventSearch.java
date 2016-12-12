@@ -44,14 +44,14 @@ public class FacebookEventSearch {
                     @Override
                     public void onCompleted(GraphResponse response) {
                         JSONObject jobj = response.getJSONObject();
-                        System.out.println("object =" + jobj);
-                        System.out.println("response =" + response);
+                        //System.out.println("object =" + jobj);
+                        //System.out.println("response =" + response);
                         JSONArray jarray = null;
                         try {
                             jarray = jobj.getJSONArray("data");
                             for (int i = 0; i < jarray.length(); i++) {
                                 JSONObject events = jarray.getJSONObject(i);
-                                System.out.println(events);
+                                //System.out.println(events);
                                 EventList.add(events);
                             }
                             Iterator<JSONObject> iter = EventList.iterator();
@@ -65,10 +65,22 @@ public class FacebookEventSearch {
                                 long endTime = dateFormat.parse(start).getTime() + 3600000 * 2;
                                 if (startTime - currTime < (3600000 * TimeFrame) && endTime - currTime > 0){
                                     System.out.println("Unix timestamp: " + startTime);
-                                    System.out.println(temp.getString("place"));
-                                    FacebookList.add(new facebookObject(temp.getString("name"), temp.getString("description"), temp.getString("id"), temp.getString("start_time"), temp.getString("place")));
+                                    //System.out.println(temp.getString("place"));
+                                    try {
+                                        FacebookList.add(new
+                                                facebookObject(temp.getString("name"), temp.getString("description"), temp.getString("id"), temp.getString("start_time"), temp.getJSONObject("place").getString("longitude"), temp.getJSONObject("place").getString("latitude")));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 } else {
                                     System.out.println(temp.getString("id") + " was removed");
+                                    try {
+                                        System.out.println(temp);
+                                        System.out.println(temp.getJSONObject("place"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                     System.out.println(temp.getString("start_time"));
                                     System.out.print("start - curr = ");
                                     System.out.println((startTime - currTime) / 3600000);

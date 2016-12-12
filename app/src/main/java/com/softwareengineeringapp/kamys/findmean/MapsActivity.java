@@ -283,8 +283,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button refresh;
     public List<facebookObject> mEventList;
     ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
+    ArrayList<buildingObject> filteredList = new ArrayList<buildingObject>();
     buildingObject bObject;
     private SearchView searchView;
+    boolean firstRun = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -296,7 +298,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         if (AccessToken.getCurrentAccessToken() != null) {
-            mEventList = searcher(53706, 24, false);
+            mEventList = searcher(53706, 100, false);
         }
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
@@ -317,6 +319,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
+                mMap.clear();
+                createPins(mainList);
+                createEventPins(mEventList);
             }
         });
         searchView = (SearchView) findViewById(R.id.searchbar);
@@ -362,17 +367,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
     public void SetPins(String restroom, String elevator, String handicap, String studyArea)
     {
         DataBaseHelper myDb = new DataBaseHelper(this);
         SQLiteDatabase db = myDb.getReadableDatabase();
         mainList.clear();
+        Cursor cur;
 
-        Cursor cur = db.rawQuery("SELECT * FROM Amenities " +
-                "WHERE Bathrooms = ? " +
-                "AND Elevators = ? " +
-                "AND Hand = ? " +
-                "AND StudyArea = ?", new String[]{restroom, elevator, handicap, studyArea});
+        if (firstRun == true)
+        {
+            cur = db.rawQuery("SELECT * FROM Amenities", null);
+        }
+
+        else
+        {
+            cur = db.rawQuery("SELECT * FROM Amenities " +
+                    "WHERE Bathrooms = ? " +
+                    "AND Elevators = ? " +
+                    "AND Hand = ? " +
+                    "AND StudyArea = ?", new String[]{restroom, elevator, handicap, studyArea});
+        }
 
         if (cur.moveToFirst())
         {
@@ -388,12 +403,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String link = cur.getString(cur.getColumnIndex("Link"));
 
                 bObject = new buildingObject(name, hand, bath, elev, study, lat, longi, link);
-                mainList.add(bObject);
+
+                if (firstRun == true)
+                {
+                    mainList.add(bObject);
+                }
+                else
+                {
+                    filteredList.add(bObject);
+                }
 
                 cur.moveToNext();
             }
         }
         cur.close();
+        firstRun = false;
     }
 
 
@@ -410,12 +434,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void createEventPins(List<facebookObject> eventList) {
-        int items=eventList.size();
-        for (int i=0; i<items; i++){
-            //double lat = Double.parseDouble(pinList.get(i).lat);
-            //double longi = Double.parseDouble(pinList.get(i).longi);
+        if (AccessToken.getCurrentAccessToken() != null) {
+            //int items=eventList.size();
+            //for (int i=0; i<items; i++){
+            //  double lat = Double.parseDouble(eventList.get(i).getLocation());
+            //double longi = Double.parseDouble(eventList.get(i).getLocation());
             //LatLng Adr = new LatLng(lat, longi);
-            //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(pinList.get(i).building));
+            //Marker marker = mMap.addMarker(new MarkerOptions().position(Adr).title(eventList.get(i).eventName));
+            //markerList.add(marker);
+            //}
         }
     }
 
