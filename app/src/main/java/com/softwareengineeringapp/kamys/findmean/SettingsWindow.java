@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 /**
@@ -50,6 +52,8 @@ public class SettingsWindow extends Activity {
                 finish();
             }
         });
+
+
     }
 
     public void mainView()
@@ -63,13 +67,13 @@ public class SettingsWindow extends Activity {
         textView = (TextView) findViewById(R.id.textView2);
         seek_bar.setMax(12);
         seek_bar.setProgress(MainActivity.instance.getPref(getString(R.string.DRAWDIST)));
-        textView.setText((double)seek_bar.getProgress() / 4 + " miles from your location");
+        textView.setText((double)seek_bar.getProgress() / 4 + " kilometers from your location");
         seek_bar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         distance = progress;
-                        textView.setText((double)distance / 4 + " miles from your location");
+                        textView.setText((double)distance / 4 + " kilometers from your location");
                         MainActivity.instance.editPref(getString(R.string.DRAWDIST), distance);
                     }
 
@@ -80,7 +84,7 @@ public class SettingsWindow extends Activity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
-                        textView.setText((double)distance / 4 + " miles from your location");
+                        textView.setText((double)distance / 4 + " kilometers from your location");
                         MainActivity.instance.editPref(getString(R.string.DRAWDIST), distance);
                     }
                 }
