@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.Marker;
 
 public class infoWindowAdapter implements InfoWindowAdapter {

@@ -7,7 +7,6 @@ package com.softwareengineeringapp.kamys.findmean;
 public class buildingObject {
     String bathroom;
     String handiCap;
-    String drink;
     String elevator;
     String building ;
     String study;
