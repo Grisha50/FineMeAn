@@ -65,7 +65,7 @@ public class FacebookEventSearch {
                                 long endTime = dateFormat.parse(start).getTime() + 3600000 * 2;
                                 if (startTime - currTime < (3600000 * TimeFrame) && endTime - currTime > 0){
                                     System.out.println("Unix timestamp: " + startTime);
-                                    System.out.println(temp)
+                                    System.out.println(temp);
                                     //System.out.println(temp.getString("place"));
                                     try {
                                         FacebookList.add(new
