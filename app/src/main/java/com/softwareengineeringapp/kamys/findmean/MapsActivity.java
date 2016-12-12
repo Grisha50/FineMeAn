@@ -63,7 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         if (AccessToken.getCurrentAccessToken() != null) {
-            mEventList = searcher(53706, 24, false);
+            mEventList = searcher(53706, 100, false);
         }
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
