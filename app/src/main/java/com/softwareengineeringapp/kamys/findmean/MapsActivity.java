@@ -50,9 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        if (AccessToken.getCurrentAccessToken() != null) {
-            mEventList = searcher(53706, 100, false);
-        }
+
         filter = (Button) findViewById(R.id.button2);
         settings = (Button) findViewById(R.id.button3);
         refresh = (Button) findViewById(R.id.button4);
@@ -71,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEventList = searcher(53706, MainActivity.instance.getPref(getString(R.string.TIME)), false);
+                mEventList = searcher(53706, 100, false);
                 mMap.clear();
                 createPins(mainList);
                 createEventPins(mEventList);
@@ -274,6 +272,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            mEventList = searcher(53706, 100, false);
+        }
         mMap = googleMap;
         CameraUpdate center=
                 CameraUpdateFactory.newLatLng(new LatLng(43.070500,
