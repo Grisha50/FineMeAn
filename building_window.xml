@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginRight="50dp"
+    android:layout_marginLeft="50dp"
+    tools:background="#f0f3bd">
+
+    <TextView
+        android:text="Building Name"
+        android:layout_width="match_parent"
+        android:id="@+id/bname"
+        android:layout_height="40sp"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+        android:background="#80C9EFC6" />
+
+    <TextView
+        android:text="Ramps"
+        android:layout_width="match_parent"
+        android:id="@+id/Ramps"
+        android:layout_height="40sp"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:background="#60FFFFFF"
+        android:textAlignment="center" />
+
+    <TextView
+        android:text="Bathroom"
+        android:layout_width="match_parent"
+        android:id="@+id/Bathroom"
+        android:layout_height="40sp"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:background="#60FFFFFF"
+        android:textAlignment="center" />
+
+    <TextView
+        android:text="Elevators"
+        android:layout_width="match_parent"
+        android:id="@+id/Elevators"
+        android:layout_height="40sp"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:background="#60FFFFFF"
+        android:textAlignment="center" />
+
+    <TextView
+        android:text="Study Area"
+        android:layout_width="match_parent"
+        android:id="@+id/studyarea"
+        android:layout_height="40sp"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:background="#60FFFFFF"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/link"
+        android:layout_below="@id/studyarea" />
+
+</LinearLayout>
