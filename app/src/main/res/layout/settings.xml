@@ -26,16 +26,6 @@
             android:textAlignment="center"
             android:textSize="20sp" />
 
-        <Switch
-            android:text="Miles/Kilometers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch1"
-            android:layout_weight="0.10"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/com_facebook_button_background_color_focused_disabled" />
-
         <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

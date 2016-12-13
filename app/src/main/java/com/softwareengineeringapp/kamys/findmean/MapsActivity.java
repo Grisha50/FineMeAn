@@ -79,11 +79,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMap.clear();
-                createPins(filteredList);
-                if (AccessToken.getCurrentAccessToken() != null) {
-                    searcher(53706, 100, false);
-                }
+                refresh();
             }
         });
 
@@ -122,6 +118,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         SetPins("x", "x", "x", "x");
+    }
+
+    public void refresh() {
+        mMap.clear();
+        createPins(filteredList);
+        if (AccessToken.getCurrentAccessToken() != null) {
+            searcher(53706, MainActivity.instance.getPref("TimeKey"), false);
+        }
     }
 
     public void createPins(ArrayList<buildingObject> pinList){
@@ -315,7 +319,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         filteredList.clear();
         filteredList.addAll(mainList);
         if (AccessToken.getCurrentAccessToken() != null) {
-            searcher(53706, 100, false);
+            searcher(53706, MainActivity.instance.getPref("TimeKey"), false);
         }
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
@@ -341,8 +345,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             SetPins(arg[0], arg[1], arg[2], arg[3]);
             mMap.clear();
             createPins(filteredList);
-            if (AccessToken.getCurrentAccessToken() != null && arg[4].equals("y")) {
-                searcher(53706, 100, false);
+            if (AccessToken.getCurrentAccessToken() != null) {
+                searcher(53706, MainActivity.instance.getPref("TimeKey"), false);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
