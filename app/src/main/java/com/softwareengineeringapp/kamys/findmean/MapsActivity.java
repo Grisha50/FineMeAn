@@ -30,6 +30,11 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 
 import static android.R.attr.data;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.location.Location;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -44,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button refresh;
     private ArrayList<buildingObject> mainList = new ArrayList<buildingObject>();
     private SearchView searchView;
+    static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -311,6 +317,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (AccessToken.getCurrentAccessToken() != null) {
             searcher(53706, 100, false);
         }
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+            Log.d("permission granted", "permission granted");
+        }
+        else {
+            Log.d("Permission denied", "permission denied");
+        }
+
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            return;
+        }
         mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
     }
 
@@ -327,5 +346,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+        @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+           case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+               if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+               }
+               else {
+
+               }
+               return;
+           }
+
+        }
     }
 }
