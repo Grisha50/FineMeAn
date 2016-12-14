@@ -334,7 +334,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     MY_PERMISSIONS_REQUEST_READ_CONTACTS);
             return;
         }
-        mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater()));
+        mMap.setInfoWindowAdapter(new infoWindowAdapter(this.getLayoutInflater(), getApplicationContext()));
     }
 
     @Override

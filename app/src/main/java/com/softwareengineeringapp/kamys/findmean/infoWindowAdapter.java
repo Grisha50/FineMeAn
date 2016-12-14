@@ -3,9 +3,12 @@ package com.softwareengineeringapp.kamys.findmean;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.content.Context;
 
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
+import com.squareup.picasso.Picasso;
 
 public class infoWindowAdapter implements InfoWindowAdapter {
     LayoutInflater inflater = null;
@@ -17,9 +20,12 @@ public class infoWindowAdapter implements InfoWindowAdapter {
     private TextView eventName;
     private TextView time;
     private TextView description;
+    private ImageView imageView;
+    Context context;
 
 
-    public infoWindowAdapter(LayoutInflater inflater) {
+    public infoWindowAdapter(LayoutInflater inflater, Context context) {
+        this.context = context;
         this.inflater = inflater;
     }
 
@@ -52,6 +58,13 @@ public class infoWindowAdapter implements InfoWindowAdapter {
                     StudyArea.setText(b.study.equals("y") ? "There is a (possibly unofficial) study area" +
                             " available on the main floor." : "No study areas available.");
                 }
+                imageView = (ImageView) v.findViewById(R.id.link);
+                Picasso.with(context)
+                        .load(b.Link)
+                        //.placeholder(R.drawable.ic_placeholder)
+                        //.error(R.drawable.ic_error_fallback)
+                        //.resize(500, 400)
+                        .into(imageView);
             }
             return (v);
         } else {
