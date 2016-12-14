@@ -20,7 +20,7 @@ public class FilterInfoWindow extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         getWindow().setLayout((int) (dm.widthPixels * .8), (int) (dm.heightPixels * .5));
-        backButton = (Button) findViewById(R.id.button5);
+        backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
