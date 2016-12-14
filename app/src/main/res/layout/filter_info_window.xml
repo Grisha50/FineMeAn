@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
-        android:layout_weight=".05" />
+        android:layout_weight=".05"
+        android:text="This filter looks for buildings that includes ALL of the checked resources. With the except being events. If no resource is checked, all resources within the draw distance (settings), and events within the timeframe (settings), will be displayed. "
+        android:textSize="24sp" />
 
     <Button
         android:text="Back"
